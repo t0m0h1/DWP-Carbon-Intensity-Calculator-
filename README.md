@@ -27,3 +27,6 @@ html/css/js project for making a hostable tool
 - navigate to index html
 - click on Go Live button
 
+3. **To run main.py**:
+- terminal "main.py" or click run
+
