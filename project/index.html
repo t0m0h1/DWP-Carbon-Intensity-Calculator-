@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> DWP Digital Footprint Calculator</title>
+    <title>DWP Digital Footprint Calculator</title>
     <link rel="stylesheet" href="style.css"> 
 </head>
 
 <body>
     <div class="container">
         <h1>Environmental Footprint Calculator</h1>
-        <form action="" method="post"> <!-- form processing script -->
+        <form action="calculate_footprint.php" method="post"> <!-- form processing script -->
+            
             <h2>Devices</h2>
             <label for="deviceType">Device Type:</label>
-            <select id="deviceType" name="deviceType">
+            <select id="deviceType" name="deviceType" aria-label="Select Device Type" required>
                 <option value="Desktop">Desktop</option>
                 <option value="Laptop">Laptop</option>
                 <option value="Smartphone">Smartphone</option>
@@ -22,23 +23,19 @@
             </select>
 
             <label for="deviceUsage">Length of Use (years):</label>
-            <input type="number" id="deviceUsage" name="deviceUsage" min="1" required>
+            <input type="number" id="deviceUsage" name="deviceUsage" min="1" aria-label="Enter Length of Use in Years" required>
 
-            <h2>Activities</h2>
-            <label for="activityType">Activity Type:</label>
-            <select id="activityType" name="activityType">
-                <option value="Email">Email</option>
-                <option value="Video Conferencing">Video Conferencing</option>
-                <option value="Web Browsing">Web Browsing</option>
-                <!-- Add more options when needed -->
-            </select>
+            <h2>Emails</h2>
 
-            <label for="activityHours">Hours per Week:</label>
-            <input type="number" id="activityHours" name="activityHours" min="1" required>
+            <label for="emailCount">Number of Emails per Week:</label>
+            <input type="number" id="emailCount" name="emailCount" min="1" aria-label="Enter Number of Emails per Week" required>
+
+            <label for="emailCount">Number of Attachment Emails per Week:</label>
+            <input type="number" id="emailCount" name="emailCount" min="1" aria-label="Enter Number of Attachment Emails per Week" required>
 
             <h2>Transportation</h2>
             <label for="transportMode">Transport Mode:</label>
-            <select id="transportMode" name="transportMode">
+            <select id="transportMode" name="transportMode" aria-label="Select Transport Mode" required>
                 <option value="Train">Train</option>
                 <option value="Car">Car</option>
                 <option value="Bicycle/Foot">Bicycle/Foot</option>
@@ -46,7 +43,7 @@
             </select>
 
             <label for="transportDistance">Distance (km) per Year:</label>
-            <input type="number" id="transportDistance" name="transportDistance" min="1" required>
+            <input type="number" id="transportDistance" name="transportDistance" min="1" aria-label="Enter Distance in Kilometers per Year" required>
 
             <button type="submit">Calculate</button>
         </form>
