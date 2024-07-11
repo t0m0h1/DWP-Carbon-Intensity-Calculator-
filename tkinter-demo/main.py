@@ -9,7 +9,8 @@ class CarbonImpactCalculator:
     def __init__(self, root):
         self.root = root
         self.root.title("Carbon Impact Calculator")
-        self.root.geometry("600x600")
+        self.root.geometry("600x650")
+        self.root.resizable(True)
 
         self.emission_factors = {
             'devices': {
@@ -46,16 +47,16 @@ class CarbonImpactCalculator:
 
     def create_widgets(self):
         # Title Label
-        title_label = ttk.Label(self.root, text="Carbon Impact Calculator", font=("Helvetica", 16))
+        title_label = ttk.Label(self.root, text="Carbon Impact Calculator", font=("Helvetica", 18, 'bold'))
         title_label.grid(row=0, column=0, columnspan=5, pady=10)
 
         # Create input fields and listboxes for each category
         for i, (category, info) in enumerate(self.inputs.items()):
-            frame = ttk.LabelFrame(self.root, text=category.capitalize())
+            frame = ttk.LabelFrame(self.root, text=category.capitalize(), padding=(10, 5))
             frame.grid(row=i+1, column=0, columnspan=5, padx=10, pady=10, sticky="ew")
 
             for j, field in enumerate(info['fields']):
-                label = ttk.Label(frame, text=field[0] + ":")
+                label = ttk.Label(frame, text=field[0] + ":", font=("Helvetica", 10))
                 label.grid(row=0, column=j*2, padx=5, pady=5, sticky="e")
 
                 if len(field) == 1:
@@ -70,10 +71,10 @@ class CarbonImpactCalculator:
                     menu.grid(row=0, column=j*2+1, padx=5, pady=5)
                     info['fields'][j] = (field[0], var)
 
-            button = ttk.Button(frame, text="Add " + category.capitalize(), command=lambda c=category: self.add_item(c))
+            button = ttk.Button(frame, text=f"Add {category.capitalize()}", command=lambda c=category: self.add_item(c))
             button.grid(row=0, column=len(info['fields'])*2, padx=5, pady=5)
 
-            listbox = tk.Listbox(frame, height=5)
+            listbox = tk.Listbox(frame, height=5, font=("Helvetica", 10))
             listbox.grid(row=1, column=0, columnspan=len(info['fields'])*2+1, padx=5, pady=5)
             info['listbox'] = listbox
 
@@ -82,18 +83,22 @@ class CarbonImpactCalculator:
         calculate_button.grid(row=len(self.inputs)+1, column=0, columnspan=5, pady=10)
 
         # Result Label
-        self.result_label = ttk.Label(self.root, text="Total Emissions: 0.00 tonnes CO2e")
+        self.result_label = ttk.Label(self.root, text="Total Emissions: 0.00 tonnes CO2e", font=("Helvetica", 12, 'bold'))
         self.result_label.grid(row=len(self.inputs)+2, column=0, columnspan=5, pady=10)
 
     def add_item(self, category):
         try:
             values = [f[1].get() for f in self.inputs[category]['fields']]
+            for value in values:
+                if not value:
+                    raise ValueError("Empty input")
+
             self.inputs[category]['listbox'].insert(tk.END, ', '.join(values))
             for _, field in self.inputs[category]['fields']:
                 if isinstance(field, ttk.Entry):
                     field.delete(0, tk.END)
         except ValueError:
-            messagebox.showerror("Invalid input", "Please enter valid numbers.")
+            messagebox.showerror("Invalid input", "Please enter valid numbers and fill all fields.")
 
     def calculate_total_emissions(self):
         try:
