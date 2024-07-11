@@ -1,16 +1,19 @@
 # DWP-Carbon-Intensity-Calculator-
-This tool helps colleagues to measure, monitor, and reduce their carbon footprint. Features include a user-friendly interface, comprehensive data input, detailed reports, customisable emission factors, and visualisation tools.
+This tool helps colleagues to measure, monitor, and reduce their carbon footprint.
 
 
-# Carbon Impact Calculator
+# Demonstrator
+Python application built with Tkinter that allows users to estimate their carbon footprint based on their usage of electronic devices, travel habits, and email activities. 
 
-The Carbon Impact Calculator is a Python application built with Tkinter that allows users to estimate their carbon footprint based on their usage of electronic devices, travel habits, and email activities. 
+# Web UI
+html/css/js project for making a hostable tool
 
 
 ## Requirements
 
 - Python 3.x
 - Tkinter (usually included with standard Python installations)
+- vs code live server extension
 
 ## Installation
 
@@ -19,3 +22,8 @@ The Carbon Impact Calculator is a Python application built with Tkinter that all
    ```sh
    git clone 'this repository'
    cd carbon-impact-calculator
+
+2. **To run the web ui**:
+- navigate to index html
+- click on Go Live button
+
