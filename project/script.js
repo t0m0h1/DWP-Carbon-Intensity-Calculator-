@@ -21,8 +21,8 @@ function calculateCarbon() {
     const emailsAttachment = parseInt(document.getElementById('emailAttachmentCount').value) || 0;
     const teamsCalls = parseFloat(document.getElementById('teamsCalls').value) || 0;
     const teamsMessages = parseInt(document.getElementById('teamsMessages').value) || 0;
-    const trainTravelDistance = parseFloat(document.getElementById('trainTravelDistance').value) || 0; // Assuming distance is entered for train
-    const carTravelDistance = parseFloat(document.getElementById('carTravelDistance').value) || 0; // Assuming distance is entered for car
+    const transportMode = document.getElementById('transportMode').value;
+    const transportDistance = parseFloat(document.getElementById('transportDistance').value) || 0;
     const laptopUsageHours = parseFloat(document.getElementById('laptopUsageHours').value) || 0;
     const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value) || 0;
     const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value) || 0;
@@ -36,8 +36,14 @@ function calculateCarbon() {
     totalCarbon += emailsAttachment * carbonFactors.emailAttachment;
     totalCarbon += teamsCalls * carbonFactors.teamsCall;
     totalCarbon += teamsMessages * carbonFactors.teamsMessage;
-    totalCarbon += trainTravelDistance * carbonFactors.trainTravel;
-    totalCarbon += carTravelDistance * carbonFactors.carTravel;
+
+    // Calculate transport carbon based on selected mode
+    if (transportMode === "Train") {
+        totalCarbon += transportDistance * carbonFactors.trainTravel;
+    } else if (transportMode === "Car") {
+        totalCarbon += transportDistance * carbonFactors.carTravel;
+    }
+
     totalCarbon += laptopUsageHours * carbonFactors.laptopUsage;
     totalCarbon += desktopUsageHours * carbonFactors.desktopUsage;
     totalCarbon += smartphoneUsageHours * carbonFactors.smartphoneUsage;
@@ -66,8 +72,8 @@ function calculateCarbon() {
         emailAttachmentCount: emailsAttachment,
         teamsCalls: teamsCalls,
         teamsMessages: teamsMessages,
-        trainTravelDistance: trainTravelDistance,
-        carTravelDistance: carTravelDistance,
+        transportMode: transportMode,
+        transportDistance: transportDistance,
         laptopUsageHours: laptopUsageHours,
         desktopUsageHours: desktopUsageHours,
         smartphoneUsageHours: smartphoneUsageHours,
@@ -86,8 +92,8 @@ window.onload = function() {
         document.getElementById('emailAttachmentCount').value = formData.emailAttachmentCount;
         document.getElementById('teamsCalls').value = formData.teamsCalls;
         document.getElementById('teamsMessages').value = formData.teamsMessages;
-        document.getElementById('trainTravelDistance').value = formData.trainTravelDistance;
-        document.getElementById('carTravelDistance').value = formData.carTravelDistance;
+        document.getElementById('transportMode').value = formData.transportMode;
+        document.getElementById('transportDistance').value = formData.transportDistance;
         document.getElementById('laptopUsageHours').value = formData.laptopUsageHours;
         document.getElementById('desktopUsageHours').value = formData.desktopUsageHours;
         document.getElementById('smartphoneUsageHours').value = formData.smartphoneUsageHours;
@@ -96,3 +102,9 @@ window.onload = function() {
         document.getElementById('smartphones').value = formData.smartphones;
     }
 };
+
+// Attach the event listener to the form so that it detects form submission
+document.getElementById('carbonForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    calculateCarbon();
+});
