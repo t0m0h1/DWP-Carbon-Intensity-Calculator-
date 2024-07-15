@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DWP Digital Footprint Calculator</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
         <h1>Environmental Footprint Calculator</h1>
-        <form action='' method="post"> <!-- form processing script -->
+        <form action='' method="post" id="carbonForm"> <!-- form processing script -->
             
             <h2>Devices</h2>
             <label for="deviceType">Device Type:</label>
@@ -18,19 +18,17 @@
                 <option value="Desktop">Desktop</option>
                 <option value="Laptop">Laptop</option>
                 <option value="Smartphone">Smartphone</option>
-
             </select>
 
             <label for="deviceUsage">Length of Use (years):</label>
             <input type="number" id="deviceUsage" name="deviceUsage" min="1" aria-label="Enter Length of Use in Years" required>
 
             <h2>Emails</h2>
-
             <label for="emailCount">Number of Emails per Week:</label>
             <input type="number" id="emailCount" name="emailCount" min="1" aria-label="Enter Number of Emails per Week" required>
 
-            <label for="emailCount">Number of Attachment Emails per Week:</label>
-            <input type="number" id="emailCount" name="emailCount" min="1" aria-label="Enter Number of Attachment Emails per Week" required>
+            <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
+            <input type="number" id="emailAttachmentCount" name="emailAttachmentCount" min="1" aria-label="Enter Number of Attachment Emails per Week" required>
 
             <h2>Transportation</h2>
             <label for="transportMode">Transport Mode:</label>
@@ -44,8 +42,39 @@
             <label for="transportDistance">Distance (km) per Year:</label>
             <input type="number" id="transportDistance" name="transportDistance" min="1" aria-label="Enter Distance in Kilometers per Year" required>
 
-            <button type="submit" onclick="calculateCarbon()">Calculate</button>
+            <h2>Teams Usage</h2>
+            <label for="teamsCalls">Teams Call Hours per Week:</label>
+            <input type="number" id="teamsCalls" name="teamsCalls" min="0" aria-label="Enter Teams Call Hours per Week" required>
+
+            <label for="teamsMessages">Number of Teams Messages per Week:</label>
+            <input type="number" id="teamsMessages" name="teamsMessages" min="0" aria-label="Enter Number of Teams Messages per Week" required>
+
+            <h2>Device Usage</h2>
+            <label for="laptopUsageHours">Laptop Usage Hours per Week:</label>
+            <input type="number" id="laptopUsageHours" name="laptopUsageHours" min="0" aria-label="Enter Laptop Usage Hours per Week" required>
+
+            <label for="desktopUsageHours">Desktop Usage Hours per Week:</label>
+            <input type="number" id="desktopUsageHours" name="desktopUsageHours" min="0" aria-label="Enter Desktop Usage Hours per Week" required>
+
+            <label for="smartphoneUsageHours">Smartphone Usage Hours per Week:</label>
+            <input type="number" id="smartphoneUsageHours" name="smartphoneUsageHours" min="0" aria-label="Enter Smartphone Usage Hours per Week" required>
+
+            <h2>Devices Owned</h2>
+            <label for="laptops">Number of Laptops:</label>
+            <input type="number" id="laptops" name="laptops" min="0" aria-label="Enter Number of Laptops" required>
+
+            <label for="desktops">Number of Desktops:</label>
+            <input type="number" id="desktops" name="desktops" min="0" aria-label="Enter Number of Desktops" required>
+
+            <label for="smartphones">Number of Smartphones:</label>
+            <input type="number" id="smartphones" name="smartphones" min="0" aria-label="Enter Number of Smartphones" required>
+
+            <button type="submit">Calculate</button>
         </form>
+
+        <h2>Results</h2>
+        <p>Total Carbon Emission: <span id="totalCarbon">0</span> kg CO2e</p>
+        <div id="breakdown"></div>
     </div>
     <script src="script.js"></script>
 </body>
