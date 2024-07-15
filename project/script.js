@@ -1,11 +1,15 @@
 document.getElementById('carbonForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    console.log("Form submitted"); // Check if the form submission event is firing
     calculateCarbon();
 });
 
 function calculateCarbon() {
 
     console.log("Calculating carbon"); // Check if the function execution is triggered
+
+    const emailCount = parseInt(document.getElementById('emailCount').value) || 0;
+    console.log("Emails:", emailCount);
 
 
 
