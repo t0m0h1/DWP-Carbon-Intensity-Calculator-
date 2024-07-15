@@ -4,6 +4,11 @@ document.getElementById('carbonForm').addEventListener('submit', function(event)
 });
 
 function calculateCarbon() {
+
+    console.log("Calculating carbon"); // Check if the function execution is triggered
+
+
+
     // Carbon intensities in kg CO2e per unit
     const carbonFactors = {
         email: 0.0003,
