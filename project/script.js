@@ -1,3 +1,8 @@
+document.getElementById('carbonForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    calculateCarbon();
+});
+
 function calculateCarbon() {
     // Carbon intensities in kg CO2e per unit
     const carbonFactors = {
@@ -102,9 +107,3 @@ window.onload = function() {
         document.getElementById('smartphones').value = formData.smartphones;
     }
 };
-
-// Attach the event listener to the form so that it detects form submission
-document.getElementById('carbonForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    calculateCarbon();
-});
