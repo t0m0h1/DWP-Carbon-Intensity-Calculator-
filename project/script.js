@@ -21,11 +21,11 @@ function calculateCarbon() {
     const emailsAttachment = parseInt(document.getElementById('emailAttachmentCount').value) || 0;
     const teamsCalls = parseFloat(document.getElementById('teamsCalls').value) || 0;
     const teamsMessages = parseInt(document.getElementById('teamsMessages').value) || 0;
-    const trainTravel = parseFloat(document.getElementById('transportDistance').value) || 0; // Assuming distance is entered for train
-    const carTravel = parseFloat(document.getElementById('transportDistance').value) || 0; // Assuming distance is entered for car
-    const laptopHours = parseFloat(document.getElementById('laptopHours').value) || 0;
-    const desktopHours = parseFloat(document.getElementById('desktopHours').value) || 0;
-    const smartphoneHours = parseFloat(document.getElementById('smartphoneHours').value) || 0;
+    const trainTravelDistance = parseFloat(document.getElementById('trainTravelDistance').value) || 0; // Assuming distance is entered for train
+    const carTravelDistance = parseFloat(document.getElementById('carTravelDistance').value) || 0; // Assuming distance is entered for car
+    const laptopUsageHours = parseFloat(document.getElementById('laptopUsageHours').value) || 0;
+    const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value) || 0;
+    const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value) || 0;
     const laptops = parseInt(document.getElementById('laptops').value) || 0;
     const desktops = parseInt(document.getElementById('desktops').value) || 0;
     const smartphones = parseInt(document.getElementById('smartphones').value) || 0;
@@ -36,17 +36,17 @@ function calculateCarbon() {
     totalCarbon += emailsAttachment * carbonFactors.emailAttachment;
     totalCarbon += teamsCalls * carbonFactors.teamsCall;
     totalCarbon += teamsMessages * carbonFactors.teamsMessage;
-    totalCarbon += trainTravel * carbonFactors.trainTravel;
-    totalCarbon += carTravel * carbonFactors.carTravel;
-    totalCarbon += laptopHours * carbonFactors.laptopUsage;
-    totalCarbon += desktopHours * carbonFactors.desktopUsage;
-    totalCarbon += smartphoneHours * carbonFactors.smartphoneUsage;
+    totalCarbon += trainTravelDistance * carbonFactors.trainTravel;
+    totalCarbon += carTravelDistance * carbonFactors.carTravel;
+    totalCarbon += laptopUsageHours * carbonFactors.laptopUsage;
+    totalCarbon += desktopUsageHours * carbonFactors.desktopUsage;
+    totalCarbon += smartphoneUsageHours * carbonFactors.smartphoneUsage;
 
-    // Calculate embodied carbon emissions
+    // Calculate embodied carbon emissions over their lifespan
     let embodiedCarbon = 0;
-    embodiedCarbon += (laptops * carbonFactors.laptopEmbodied) / carbonFactors.lifespan * laptopHours;
-    embodiedCarbon += (desktops * carbonFactors.desktopEmbodied) / carbonFactors.lifespan * desktopHours;
-    embodiedCarbon += (smartphones * carbonFactors.smartphoneEmbodied) / carbonFactors.lifespan * smartphoneHours;
+    embodiedCarbon += (laptops * carbonFactors.laptopEmbodied) / carbonFactors.lifespan * laptopUsageHours;
+    embodiedCarbon += (desktops * carbonFactors.desktopEmbodied) / carbonFactors.lifespan * desktopUsageHours;
+    embodiedCarbon += (smartphones * carbonFactors.smartphoneEmbodied) / carbonFactors.lifespan * smartphoneUsageHours;
 
     // Total carbon emissions
     totalCarbon += embodiedCarbon;
@@ -56,7 +56,7 @@ function calculateCarbon() {
 
     // Detailed breakdown
     document.getElementById('breakdown').innerHTML = `
-        <p>Operational Carbon: ${totalCarbon.toFixed(2)} kg CO2e</p>
+        <p>Operational Carbon: ${(totalCarbon - embodiedCarbon).toFixed(2)} kg CO2e</p>
         <p>Embodied Carbon: ${embodiedCarbon.toFixed(2)} kg CO2e</p>
     `;
 
@@ -66,10 +66,11 @@ function calculateCarbon() {
         emailAttachmentCount: emailsAttachment,
         teamsCalls: teamsCalls,
         teamsMessages: teamsMessages,
-        transportDistance: trainTravel, // Assuming train travel distance is used for transportDistance
-        laptopHours: laptopHours,
-        desktopHours: desktopHours,
-        smartphoneHours: smartphoneHours,
+        trainTravelDistance: trainTravelDistance,
+        carTravelDistance: carTravelDistance,
+        laptopUsageHours: laptopUsageHours,
+        desktopUsageHours: desktopUsageHours,
+        smartphoneUsageHours: smartphoneUsageHours,
         laptops: laptops,
         desktops: desktops,
         smartphones: smartphones
@@ -85,10 +86,11 @@ window.onload = function() {
         document.getElementById('emailAttachmentCount').value = formData.emailAttachmentCount;
         document.getElementById('teamsCalls').value = formData.teamsCalls;
         document.getElementById('teamsMessages').value = formData.teamsMessages;
-        document.getElementById('transportDistance').value = formData.transportDistance; // Assuming train travel distance is used for transportDistance
-        document.getElementById('laptopHours').value = formData.laptopHours;
-        document.getElementById('desktopHours').value = formData.desktopHours;
-        document.getElementById('smartphoneHours').value = formData.smartphoneHours;
+        document.getElementById('trainTravelDistance').value = formData.trainTravelDistance;
+        document.getElementById('carTravelDistance').value = formData.carTravelDistance;
+        document.getElementById('laptopUsageHours').value = formData.laptopUsageHours;
+        document.getElementById('desktopUsageHours').value = formData.desktopUsageHours;
+        document.getElementById('smartphoneUsageHours').value = formData.smartphoneUsageHours;
         document.getElementById('laptops').value = formData.laptops;
         document.getElementById('desktops').value = formData.desktops;
         document.getElementById('smartphones').value = formData.smartphones;
