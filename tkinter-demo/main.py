@@ -10,7 +10,7 @@ class CarbonImpactCalculator:
         self.root = root
         self.root.title("Carbon Impact Calculator")
         self.root.geometry("600x650")
-        self.root.resizable(True)
+        self.root.resizable(False, False)
 
         self.emission_factors = {
             'devices': {
