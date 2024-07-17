@@ -1,22 +1,21 @@
-
 {
-    "email": 0.000001,
-    "teamsCall": 0.000014,
-    "trainTravel": 0.041,
-    "carTravel": 0.171,
-    "desktop": {
-        "operational": 0.0002,
-        "embodied": 860,
-        "lifespan": 5
+    "deviceFactors": {
+        "Desktop": 600,
+        "Laptop": 300,
+        "Smartphone": 70
     },
-    "laptop": {
-        "operational": 0.0001,
-        "embodied": 227,
-        "lifespan": 3
+    "usageHoursFactors": {
+        "Laptop": 0.035,
+        "Desktop": 0.07,
+        "Smartphone": 0.005
     },
-    "smartphone": {
-        "operational": 0.000012,
-        "embodied": 70,
-        "lifespan": 2
+    "emailFactors": {
+        "email": 0.004,
+        "attachmentEmail": 0.02
+    },
+    "transportFactors": {
+        "Train": 0.041,
+        "Car": 0.251,
+        "Bicycle/Foot": 0
     }
 }

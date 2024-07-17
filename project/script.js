@@ -1,108 +1,58 @@
-console.log("Calculating carbon"); // Check if the function execution is triggered
-
-// Carbon intensities in kg CO2e per unit (from json file)
-let carbonFactors;
-
-fetch('carbonFactors.json')
-    .then(response => response.json())
-    .then(data => {
-        carbonFactors = data;
-        // rest of your code here
-    })
-    .catch(error => console.error('Error:', error));
+// script.js:
+// Fetches the factors from the factors.json file.
+// Retrieves the user inputs from the form.
+// Calculates the carbon emissions for devices, emails, transport, and usage hours.
+// Sums up all the emissions to get the total carbon footprint.
+// Updates the results section in the HTML to display the total carbon emissions and a breakdown of the emissions by category.
 
 
-// Retrieve values from form
-const emails = parseInt(document.getElementById('emailCount').value) || 0;
-const emailsAttachment = parseInt(document.getElementById('emailAttachmentCount').value) || 0;
-const teamsCalls = parseFloat(document.getElementById('teamsCalls').value) || 0;
-const teamsMessages = parseInt(document.getElementById('teamsMessages').value) || 0;
-const transportMode = document.getElementById('transportMode').value;
-const transportDistance = parseFloat(document.getElementById('transportDistance').value) || 0;
-const laptopUsageHours = parseFloat(document.getElementById('laptopUsageHours').value) || 0;
-const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value) || 0;
-const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value) || 0;
-const laptops = parseInt(document.getElementById('laptops').value) || 0;
-const desktops = parseInt(document.getElementById('desktops').value) || 0;
-const smartphones = parseInt(document.getElementById('smartphones').value) || 0;
-
-// Calculate operational carbon emissions
-let totalCarbon = 0;
-totalCarbon += emails * carbonFactors.email;
-totalCarbon += emailsAttachment * carbonFactors.emailAttachment;
-totalCarbon += teamsCalls * carbonFactors.teamsCall;
-totalCarbon += teamsMessages * carbonFactors.teamsMessage;
-
-// Calculate transport carbon based on selected mode
-if (transportMode === "Train") {
-    totalCarbon += transportDistance * carbonFactors.trainTravel;
-} else if (transportMode === "Car") {
-    totalCarbon += transportDistance * carbonFactors.carTravel;
-}
-
-totalCarbon += laptopUsageHours * carbonFactors.laptopUsage;
-totalCarbon += desktopUsageHours * carbonFactors.desktopUsage;
-totalCarbon += smartphoneUsageHours * carbonFactors.smartphoneUsage;
-
-// Calculate embodied carbon emissions over their lifespan
-let embodiedCarbon = 0;
-embodiedCarbon += (laptops * carbonFactors.laptopEmbodied) / carbonFactors.lifespan * laptopUsageHours;
-embodiedCarbon += (desktops * carbonFactors.desktopEmbodied) / carbonFactors.lifespan * desktopUsageHours;
-embodiedCarbon += (smartphones * carbonFactors.smartphoneEmbodied) / carbonFactors.lifespan * smartphoneUsageHours;
-
-// Total carbon emissions
-totalCarbon += embodiedCarbon;
-
-// Display the result
-document.getElementById('totalCarbon').innerText = totalCarbon.toFixed(2);
-
-// Detailed breakdown
-document.getElementById('breakdown').innerHTML = `
-    <p>Operational Carbon: ${(totalCarbon - embodiedCarbon).toFixed(2)} kg CO2e</p>
-    <p>Embodied Carbon: ${embodiedCarbon.toFixed(2)} kg CO2e</p>
+document.getElementById('carbonForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Fetch the factors from JSON
+    const response = await fetch('carbonFactors.json');
+    const factors = await response.json();
+    
+    // Get values from the form
+    const deviceType = document.getElementById('deviceType').value;
+    const deviceUsage = parseFloat(document.getElementById('deviceUsage').value);
+    const emailCount = parseFloat(document.getElementById('emailCount').value);
+    const emailAttachmentCount = parseFloat(document.getElementById('emailAttachmentCount').value);
+    const transportMode = document.getElementById('transportMode').value;
+    const transportDistance = parseFloat(document.getElementById('transportDistance').value);
+    const laptopUsageHours = parseFloat(document.getElementById('laptopUsageHours').value);
+    const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value);
+    const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value);
+    const laptops = parseInt(document.getElementById('laptops').value);
+    const desktops = parseInt(document.getElementById('desktops').value);
+    const smartphones = parseInt(document.getElementById('smartphones').value);
+    
+    // Calculate carbon emissions for devices
+    const deviceCarbon = (factors.deviceFactors[deviceType] * deviceUsage);
+    
+    // Calculate carbon emissions for email
+    const emailCarbon = (emailCount * factors.emailFactors.email * 52) + 
+                        (emailAttachmentCount * factors.emailFactors.attachmentEmail * 52);
+    
+    // Calculate carbon emissions for transport
+    const transportCarbon = transportDistance * factors.transportFactors[transportMode];
+    
+    // Calculate carbon emissions for usage hours
+    const laptopUsageCarbon = (laptopUsageHours * factors.usageHoursFactors.Laptop * 52 * laptops);
+    const desktopUsageCarbon = (desktopUsageHours * factors.usageHoursFactors.Desktop * 52 * desktops);
+    const smartphoneUsageCarbon = (smartphoneUsageHours * factors.usageHoursFactors.Smartphone * 52 * smartphones);
+    
+    // Total carbon footprint
+    const totalCarbon = deviceCarbon + emailCarbon + transportCarbon + laptopUsageCarbon + desktopUsageCarbon + smartphoneUsageCarbon;
+    
+    // Update the results in the HTML
+    document.getElementById('totalCarbon').innerText = totalCarbon.toFixed(2);
+    document.getElementById('breakdown').innerHTML = `
+        <p>Devices: ${deviceCarbon.toFixed(2)} kg CO2e</p>
+        <p>Emails: ${emailCarbon.toFixed(2)} kg CO2e</p>
+        <p>Transport: ${transportCarbon.toFixed(2)} kg CO2e</p>
+        <p>Laptop Usage: ${laptopUsageCarbon.toFixed(2)} kg CO2e</p>
+        <p>Desktop Usage: ${desktopUsageCarbon.toFixed(2)} kg CO2e</p>
+        <p>Smartphone Usage: ${smartphoneUsageCarbon.toFixed(2)} kg CO2e</p>
     `;
-
-    // Store data in local storage
-    const formData = {
-        emailCount: emails,
-        emailAttachmentCount: emailsAttachment,
-        teamsCalls: teamsCalls,
-        teamsMessages: teamsMessages,
-        transportMode: transportMode,
-        transportDistance: transportDistance,
-        laptopUsageHours: laptopUsageHours,
-        desktopUsageHours: desktopUsageHours,
-        smartphoneUsageHours: smartphoneUsageHours,
-        laptops: laptops,
-        desktops: desktops,
-        smartphones: smartphones
-    };
-    try {
-        localStorage.setItem('carbonFormData', JSON.stringify(formData));
-    } catch (e) {
-        console.error('Error saving to localStorage', e);
-    }
-
-
-// Load data from local storage on page load
-window.onload = function() {
-    try {
-        const formData = JSON.parse(localStorage.getItem('carbonFormData'));
-        if (formData) {
-            document.getElementById('emailCount').value = formData.emailCount;
-            document.getElementById('emailAttachmentCount').value = formData.emailAttachmentCount;
-            document.getElementById('teamsCalls').value = formData.teamsCalls;
-            document.getElementById('teamsMessages').value = formData.teamsMessages;
-            document.getElementById('transportMode').value = formData.transportMode;
-            document.getElementById('transportDistance').value = formData.transportDistance;
-            document.getElementById('laptopUsageHours').value = formData.laptopUsageHours;
-            document.getElementById('desktopUsageHours').value = formData.desktopUsageHours;
-            document.getElementById('smartphoneUsageHours').value = formData.smartphoneUsageHours;
-            document.getElementById('laptops').value = formData.laptops;
-            document.getElementById('desktops').value = formData.desktops;
-            document.getElementById('smartphones').value = formData.smartphones;
-        }
-    } catch (e) {
-        console.error('Error loading from localStorage', e);
-    }
-};
+});
