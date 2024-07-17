@@ -1,0 +1,22 @@
+
+{
+    "email": 0.000001,
+    "teamsCall": 0.000014,
+    "trainTravel": 0.041,
+    "carTravel": 0.171,
+    "desktop": {
+        "operational": 0.0002,
+        "embodied": 860,
+        "lifespan": 5
+    },
+    "laptop": {
+        "operational": 0.0001,
+        "embodied": 227,
+        "lifespan": 3
+    },
+    "smartphone": {
+        "operational": 0.000012,
+        "embodied": 70,
+        "lifespan": 2
+    }
+}

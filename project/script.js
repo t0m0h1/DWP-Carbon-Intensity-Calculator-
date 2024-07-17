@@ -1,21 +1,16 @@
 console.log("Calculating carbon"); // Check if the function execution is triggered
 
-// Carbon intensities in kg CO2e per unit
-const carbonFactors = {
-    email: 0.0003,
-    emailAttachment: 0.03,
-    teamsCall: 0.06, // per hour
-    teamsMessage: 0.0002,
-    trainTravel: 0.041, // per km
-    carTravel: 0.271, // per km
-    laptopUsage: 0.05, // per hour
-    desktopUsage: 0.1, // per hour
-    smartphoneUsage: 0.02, // per hour
-    laptopEmbodied: 200, // per device over lifespan
-    desktopEmbodied: 600, // per device over lifespan
-    smartphoneEmbodied: 70, // per device over lifespan
-    lifespan: 1560 // estimated usage hours over 3 years (52 weeks * 30 hours)
-};
+// Carbon intensities in kg CO2e per unit (from json file)
+let carbonFactors;
+
+fetch('carbonFactors.json')
+    .then(response => response.json())
+    .then(data => {
+        carbonFactors = data;
+        // rest of your code here
+    })
+    .catch(error => console.error('Error:', error));
+
 
 // Retrieve values from form
 const emails = parseInt(document.getElementById('emailCount').value) || 0;
