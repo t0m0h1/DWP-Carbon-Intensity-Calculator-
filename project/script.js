@@ -1,5 +1,5 @@
 // script.js:
-// Fetches the factors from the factors.json file.
+// Fetches the factors from the json file.
 // Retrieves the user inputs from the form.
 // Calculates the carbon emissions for devices, emails, transport, and usage hours.
 // Sums up all the emissions to get the total carbon footprint.
