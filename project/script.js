@@ -46,12 +46,15 @@ async function calculateCarbonFootprint() {
 
     // Update the results in the HTML
     document.getElementById('totalCarbon').innerText = totalCarbon.toFixed(2);
-    document.getElementById('breakdown').innerHTML = `
-        <p>Devices: ${deviceCarbon.toFixed(2)} kg CO2e</p>
-        <p>Emails: ${emailCarbon.toFixed(2)} kg CO2e</p>
-        <p>Transport: ${transportCarbon.toFixed(2)} kg CO2e</p>
-        <p>Laptop Usage: ${laptopUsageCarbon.toFixed(2)} kg CO2e</p>
-        <p>Desktop Usage: ${desktopUsageCarbon.toFixed(2)} kg CO2e</p>
-        <p>Smartphone Usage: ${smartphoneUsageCarbon.toFixed(2)} kg CO2e</p>
-    `;
+
+    // breakdown not required yet
+
+    // document.getElementById('breakdown').innerHTML = `
+    //     <p>Devices: ${deviceCarbon.toFixed(2)} kg CO2e</p>
+    //     <p>Emails: ${emailCarbon.toFixed(2)} kg CO2e</p>
+    //     <p>Transport: ${transportCarbon.toFixed(2)} kg CO2e</p>
+    //     <p>Laptop Usage: ${laptopUsageCarbon.toFixed(2)} kg CO2e</p>
+    //     <p>Desktop Usage: ${desktopUsageCarbon.toFixed(2)} kg CO2e</p>
+    //     <p>Smartphone Usage: ${smartphoneUsageCarbon.toFixed(2)} kg CO2e</p>
+    // `;
 }

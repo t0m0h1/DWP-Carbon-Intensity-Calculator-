@@ -1,15 +1,12 @@
-/* style.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     margin: 0;
-    padding: 0;
+    padding: 20px 0; /* Added padding at the top and bottom */
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin-top: 20px;
+    align-items: flex-start; /* Align items at the start to enable scrolling */
+    min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
 }
 
 .container {
@@ -19,6 +16,7 @@ body {
     border-radius: 8px;
     width: 100%;
     max-width: 500px;
+    margin: 20px 0; /* Added margin at the top and bottom */
 }
 
 h1 {
@@ -61,4 +59,8 @@ button {
 
 button:hover {
     background: #4cae4c;
+}
+
+#results {
+    margin-top: 20px; /* Added margin to separate results from the button */
 }
