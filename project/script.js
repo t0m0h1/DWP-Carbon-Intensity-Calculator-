@@ -43,76 +43,7 @@ function removeDevice(button) {
 
 
 
-// // Function to calculate the total carbon footprint
-// async function calculateCarbonFootprint(event) {
-//     event.preventDefault(); // Prevent page refresh
 
-//     let factors;
-//     try {
-//         const response = await fetch('factors.json');
-//         if (!response.ok) throw new Error('Network response was not ok');
-//         factors = await response.json();
-//     } catch (error) {
-//         console.error('Failed to fetch factors:', error);
-//         alert('Failed to fetch carbon factors. Please try again later.');
-//         return;
-//     }
-
-//     // Get values from the inputs
-//     const emailCount = parseFloat(document.getElementById('emailCount').value) || 0;
-//     const emailAttachmentCount = parseFloat(document.getElementById('emailAttachmentCount').value) || 0;
-//     const transportMode = document.getElementById('transportMode').value;
-//     const transportDistanceKm = parseFloat(document.getElementById('transportDistance').value) || 0;
-//     const laptopUsageHours = parseFloat(document.getElementById('laptopUsageHours').value) || 0;
-//     const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value) || 0;
-//     const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value) || 0;
-//     const laptops = parseInt(document.getElementById('laptops').value) || 0;
-//     const desktops = parseInt(document.getElementById('desktops').value) || 0;
-//     const smartphones = parseInt(document.getElementById('smartphones').value) || 0;
-
-//     // Convert transport distance from kilometers to miles
-//     const transportDistanceMiles = transportDistanceKm * 0.621371;
-
-//     // Calculate carbon emissions for multiple devices
-//     let totalDeviceCarbon = 0;
-//     const deviceTypes = document.getElementsByName('deviceType[]');
-//     const deviceUsages = document.getElementsByName('deviceUsage[]');
-//     for (let i = 0; i < deviceTypes.length; i++) {
-//         const deviceType = deviceTypes[i].value;
-//         const deviceUsageYears = parseFloat(deviceUsages[i].value) || 0;
-//         const deviceFactor = factors.deviceFactors[deviceType] || {};
-//         const embodiedCarbon = deviceFactor.embodied || 0;
-//         const usageCarbonPerHour = deviceFactor.usagePerHour || 0;
-        
-//         // Embodied carbon is one-time; usage carbon is calculated for the given years
-//         totalDeviceCarbon += (embodiedCarbon + (usageCarbonPerHour * deviceUsageYears * 8760)); // 8760 hours/year
-//     }
-
-//     // Calculate carbon emissions for email
-//     const emailCarbon = (emailCount * (factors.emailFactors.email || 0) * 52) + 
-//                         (emailAttachmentCount * (factors.emailFactors.attachmentEmail || 0) * 52);
-
-//     // Calculate carbon emissions for transport (using miles)
-//     const transportCarbon = transportDistanceMiles * (factors.transportFactors[transportMode] || 0);
-
-//     // Calculate usage carbon for laptops, desktops, and smartphones
-//     const laptopUsageCarbon = laptopUsageHours * (factors.usageHoursFactors.Laptop || 0) * 52 * laptops;
-//     const desktopUsageCarbon = desktopUsageHours * (factors.usageHoursFactors.Desktop || 0) * 52 * desktops;
-//     const smartphoneUsageCarbon = smartphoneUsageHours * (factors.usageHoursFactors.Smartphone || 0) * 52 * smartphones;
-
-//     // Total carbon footprint
-//     const totalCarbon = totalDeviceCarbon + emailCarbon + transportCarbon + laptopUsageCarbon + desktopUsageCarbon + smartphoneUsageCarbon;
-
-//     // Update the results in the HTML
-//     document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)}`;
-// }
-
-
-
-
-
-
-// Function to calculate the total carbon footprint
 async function calculateCarbonFootprint(event) {
     event.preventDefault(); // Prevent page refresh
 
@@ -142,7 +73,7 @@ async function calculateCarbonFootprint(event) {
     // Convert transport distance from kilometers to miles
     const transportDistanceMiles = transportDistanceKm * 0.621371;
 
-    // Calculate carbon emissions for multiple devices
+    // Calculate carbon emissions for devices
     let totalDeviceCarbon = 0;
     const deviceTypes = document.getElementsByName('deviceType[]');
     const deviceUsages = document.getElementsByName('deviceUsage[]');
@@ -153,21 +84,32 @@ async function calculateCarbonFootprint(event) {
         const embodiedCarbon = deviceFactor.embodied || 0;
         const usageCarbonPerHour = deviceFactor.usagePerHour || 0;
 
-        // Embodied carbon is a one-time value; usage carbon is calculated over the given years
-        totalDeviceCarbon += (embodiedCarbon + (usageCarbonPerHour * deviceUsageYears * 8760)); // 8760 hours/year
+        // Calculate annual usage carbon if usage years > 0
+        const annualUsageCarbon = deviceUsageYears > 0 
+            ? (desktopUsageHours * 52 * usageCarbonPerHour) 
+            : 0;
+
+        // Add embodied carbon and annual usage carbon
+        totalDeviceCarbon += embodiedCarbon + annualUsageCarbon;
     }
 
     // Calculate carbon emissions for emails
-    const emailCarbon = (emailCount * (factors.emailFactors.email || 0)) +
-                        (emailAttachmentCount * (factors.emailFactors.attachmentEmail || 0));
+    const emailCarbon = (emailCount * (factors.emailFactors.email || 0) * 52) + 
+                        (emailAttachmentCount * (factors.emailFactors.attachmentEmail || 0) * 52);
 
     // Calculate carbon emissions for transport (using miles)
     const transportCarbon = transportDistanceMiles * (factors.transportFactors[transportMode] || 0);
 
     // Calculate usage carbon for laptops, desktops, and smartphones
-    const laptopUsageCarbon = laptopUsageHours * (factors.usageHoursFactors.Laptop || 0) * 52 * laptops;
-    const desktopUsageCarbon = desktopUsageHours * (factors.usageHoursFactors.Desktop || 0) * 52 * desktops;
-    const smartphoneUsageCarbon = smartphoneUsageHours * (factors.usageHoursFactors.Smartphone || 0) * 52 * smartphones;
+    const laptopUsageCarbon = laptopUsageHours > 0 
+        ? laptopUsageHours * (factors.usageHoursFactors.Laptop || 0) * 52 * laptops
+        : 0;
+    const desktopUsageCarbon = desktopUsageHours > 0 
+        ? desktopUsageHours * (factors.usageHoursFactors.Desktop || 0) * 52 * desktops
+        : 0;
+    const smartphoneUsageCarbon = smartphoneUsageHours > 0 
+        ? smartphoneUsageHours * (factors.usageHoursFactors.Smartphone || 0) * 52 * smartphones
+        : 0;
 
     // Total carbon footprint
     const totalCarbon = totalDeviceCarbon + emailCarbon + transportCarbon + laptopUsageCarbon + desktopUsageCarbon + smartphoneUsageCarbon;
