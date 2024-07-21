@@ -1,21 +1,32 @@
 {
     "deviceFactors": {
-        "Desktop": 600,
-        "Laptop": 300,
-        "Smartphone": 70
-    },
-    "usageHoursFactors": {
-        "Laptop": 0.035,
-        "Desktop": 0.07,
-        "Smartphone": 0.005
+      "Desktop": {
+        "embodied": 100,            
+        "usagePerHour": 0.05        
+      },
+      "Laptop": {
+        "embodied": 50,             
+        "usagePerHour": 0.03        
+      },
+      "Smartphone": {
+        "embodied": 10,
+        "usagePerHour": 0.01    
+      }
     },
     "emailFactors": {
-        "email": 0.004,
-        "attachmentEmail": 0.02
+      "email": 0.01,   
+      "attachmentEmail": 0.05
     },
     "transportFactors": {
-        "Train": 0.041,
-        "Car": 0.251,
-        "Bicycle/Foot": 0
+      "Car": 0.2,  
+      "Bus": 0.1,  
+      "Train": 0.05 
+    },
+    "usageHoursFactors": {
+      "Laptop": 0.02,              
+      "Desktop": 0.03,         
+      "Smartphone": 0.01       
     }
-}
+  }
+  
+
