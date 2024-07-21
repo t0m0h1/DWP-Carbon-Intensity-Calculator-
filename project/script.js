@@ -1,11 +1,38 @@
-async function calculateCarbonFootprint() {
+let deviceCount = 1;
+
+function addDevice() {
+    const container = document.getElementById('devicesContainer');
+    const newDevice = document.createElement('div');
+    newDevice.className = 'device';
+    newDevice.innerHTML = `
+        <h2>Device</h2>
+        <label for="deviceType${deviceCount}">Device Type:</label>
+        <select id="deviceType${deviceCount}" name="deviceType[]" aria-label="Select Device Type" required>
+            <option value="Desktop">Desktop</option>
+            <option value="Laptop">Laptop</option>
+            <option value="Smartphone">Smartphone</option>
+        </select>
+        <label for="deviceUsage${deviceCount}">Length of Use (years):</label>
+        <input type="number" id="deviceUsage${deviceCount}" name="deviceUsage[]" min="1" step="1" aria-label="Enter Length of Use in Years" required>
+        <button type="button" class="remove" onclick="removeDevice(this)">Remove</button>
+    `;
+    container.appendChild(newDevice);
+    deviceCount++;
+}
+
+function removeDevice(button) {
+    const container = document.getElementById('devicesContainer');
+    container.removeChild(button.parentElement);
+}
+
+async function calculateCarbonFootprint(event) {
+    event.preventDefault(); // Prevent page refresh
+
     // Fetch the factors from JSON
     const response = await fetch('factors.json');
     const factors = await response.json();
 
     // Get values from the inputs
-    const deviceType = document.getElementById('deviceType').value;
-    const deviceUsage = parseFloat(document.getElementById('deviceUsage').value);
     const emailCount = parseFloat(document.getElementById('emailCount').value);
     const emailAttachmentCount = parseFloat(document.getElementById('emailAttachmentCount').value);
     const transportMode = document.getElementById('transportMode').value;
@@ -17,11 +44,18 @@ async function calculateCarbonFootprint() {
     const desktops = parseInt(document.getElementById('desktops').value);
     const smartphones = parseInt(document.getElementById('smartphones').value);
 
-    console.log("Inputs:", { deviceType, deviceUsage, emailCount, emailAttachmentCount, transportMode, transportDistance, laptopUsageHours, desktopUsageHours, smartphoneUsageHours, laptops, desktops, smartphones });
+    console.log("Inputs:", { emailCount, emailAttachmentCount, transportMode, transportDistance, laptopUsageHours, desktopUsageHours, smartphoneUsageHours, laptops, desktops, smartphones });
 
-    // Calculate carbon emissions for devices
-    const deviceCarbon = (factors.deviceFactors[deviceType] * deviceUsage);
-    console.log("Device Carbon:", deviceCarbon);
+    // Calculate carbon emissions for multiple devices
+    let totalDeviceCarbon = 0;
+    const deviceTypes = document.getElementsByName('deviceType[]');
+    const deviceUsages = document.getElementsByName('deviceUsage[]');
+    for (let i = 0; i < deviceTypes.length; i++) {
+        const deviceType = deviceTypes[i].value;
+        const deviceUsage = parseFloat(deviceUsages[i].value);
+        totalDeviceCarbon += (factors.deviceFactors[deviceType] * deviceUsage);
+    }
+    console.log("Total Device Carbon:", totalDeviceCarbon);
 
     // Calculate carbon emissions for email
     const emailCarbon = (emailCount * factors.emailFactors.email * 52) + 
@@ -41,20 +75,11 @@ async function calculateCarbonFootprint() {
     console.log("Smartphone Usage Carbon:", smartphoneUsageCarbon);
 
     // Total carbon footprint
-    const totalCarbon = deviceCarbon + emailCarbon + transportCarbon + laptopUsageCarbon + desktopUsageCarbon + smartphoneUsageCarbon;
+    const totalCarbon = totalDeviceCarbon + emailCarbon + transportCarbon + laptopUsageCarbon + desktopUsageCarbon + smartphoneUsageCarbon;
     console.log("Total Carbon:", totalCarbon);
 
     // Update the results in the HTML
-    document.getElementById('totalCarbon').innerText = totalCarbon.toFixed(2);
+    document.getElementById('totalCarbon').innerText = totalCarbon + " kg CO2e";
 
-    // breakdown not required yet
 
-    // document.getElementById('breakdown').innerHTML = `
-    //     <p>Devices: ${deviceCarbon.toFixed(2)} kg CO2e</p>
-    //     <p>Emails: ${emailCarbon.toFixed(2)} kg CO2e</p>
-    //     <p>Transport: ${transportCarbon.toFixed(2)} kg CO2e</p>
-    //     <p>Laptop Usage: ${laptopUsageCarbon.toFixed(2)} kg CO2e</p>
-    //     <p>Desktop Usage: ${desktopUsageCarbon.toFixed(2)} kg CO2e</p>
-    //     <p>Smartphone Usage: ${smartphoneUsageCarbon.toFixed(2)} kg CO2e</p>
-    // `;
-}
+};

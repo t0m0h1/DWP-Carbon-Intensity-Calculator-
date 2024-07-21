@@ -1,97 +1,128 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef;
     margin: 0;
-    padding: 20px 0;
+    padding: 20px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: flex-start;
     min-height: 100vh;
 }
 
 .container {
-    background: #fff;
-    padding: 20px 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    background: #ffffff;
+    padding: 30px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
     width: 100%;
-    max-width: 600px; /* Slightly increased for better layout */
-    margin: 20px;
-    box-sizing: border-box; /* Ensure padding is included in width */
+    max-width: 700px;
+    margin: 20px auto; /* Center container and ensure it's centered horizontally */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 20px; /* Added margin for better spacing */
+    margin-bottom: 30px;
+    font-size: 28px;
 }
 
 h2 {
     color: #444;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
     margin-bottom: 15px;
+    font-size: 22px;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
-    color: #555;
+    margin-bottom: 6px;
+    color: #666;
+    font-size: 16px;
 }
 
 select, input[type="number"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box; /* Ensure padding is included in width */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Hide spinners in Firefox */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Hide spinners in Chrome */
+    margin: 0;
 }
 
 button {
-    width: 100%;
-    padding: 10px 15px;
-    background: #5cb85c;
+    display: inline-block;
+    padding: 14px 24px;
+    background: #007bff;
     border: none;
     color: white;
     font-size: 16px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s ease;
-    margin-bottom: 10px; /* Separate buttons slightly */
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin: 10px;
+    text-align: center;
 }
 
 button:hover {
-    background: #4cae4c;
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+button:active {
+    background: #004080;
+    transform: scale(1);
 }
 
 button.remove {
-    background: #d9534f;
+    background: #dc3545;
 }
 
 button.remove:hover {
-    background: #c9302c;
+    background: #c82333;
+}
+
+button.remove:active {
+    background: #bd2130;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
 }
 
 #results {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
     margin-top: 20px;
-    padding: 10px;
-    background: #e9ecef;
-    border-radius: 4px;
-    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box; /* Ensure padding and border do not cause overflow */
 }
 
 #results h3 {
     margin: 0;
     color: #333;
+    font-size: 20px;
+    text-align: center; /* Center align text within results */
 }
 
-#breakdown {
-    margin-top: 10px;
-    text-align: left;
-    color: #555;
-}
-
+/* Responsive design */
 @media (max-width: 600px) {
     .container {
         padding: 15px;
@@ -99,10 +130,11 @@ button.remove:hover {
 
     button {
         font-size: 14px;
-        padding: 8px 12px;
+        padding: 12px 20px;
     }
 
     select, input[type="number"] {
-        padding: 8px;
+        padding: 10px;
+        font-size: 14px;
     }
 }
