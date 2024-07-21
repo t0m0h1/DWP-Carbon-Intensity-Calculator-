@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -65,3 +65,71 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+ -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DWP Digital Footprint Calculator</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Environmental Footprint Calculator</h1>
+        <form id="footprintForm">
+            <div id="devicesContainer">
+                <h2>Devices</h2>
+                <div class="device">
+                    <label for="deviceType0">Device Type:</label>
+                    <select id="deviceType0" name="deviceType[]" aria-label="Select Device Type" required>
+                        <option value="Desktop">Desktop</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Smartphone">Smartphone</option>
+                    </select>
+                    <label for="deviceUsage0">Length of Use (years):</label>
+                    <input type="number" id="deviceUsage0" name="deviceUsage[]" min="1" step="1" aria-label="Enter Length of Use in Years" required>
+                    <button type="button" onclick="removeDevice(this)">Remove</button>
+                </div>
+            </div>
+            <button type="button" onclick="addDevice()">Add Device</button>
+
+            <div>
+                <h2>Emails</h2>
+                <label for="emailCount">Number of Emails per Week:</label>
+                <input type="number" id="emailCount" name="emailCount" min="1" step="1" aria-label="Enter Number of Emails per Week" required>
+                <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
+                <input type="number" id="emailAttachmentCount" name="emailAttachmentCount" min="1" step="1" aria-label="Enter Number of Attachment Emails per Week" required>
+            </div>
+            <div>
+                <h2>Transportation</h2>
+                <label for="transportMode">Transport Mode:</label>
+                <select id="transportMode" name="transportMode" aria-label="Select Transport Mode" required>
+                    <option value="Train">Train</option>
+                    <option value="Car">Car</option>
+                    <option value="Bicycle/Foot">Bicycle/Foot</option>
+                </select>
+                <label for="transportDistance">Distance (km) per Year:</label>
+                <input type="number" id="transportDistance" name="transportDistance" min="1" step="1" aria-label="Enter Distance in Kilometers per Year" required>
+            </div>
+            <div>
+                <h2>Usage Hours</h2>
+                <label for="laptopUsageHours">Laptop Usage Hours per Week:</label>
+                <input type="number" id="laptopUsageHours" name="laptopUsageHours" min="0" step="1" aria-label="Enter Laptop Usage Hours per Week" required>
+                <label for="desktopUsageHours">Desktop Usage Hours per Week:</label>
+                <input type="number" id="desktopUsageHours" name="desktopUsageHours" min="0" step="1" aria-label="Enter Desktop Usage Hours per Week" required>
+                <label for="smartphoneUsageHours">Smartphone Usage Hours per Week:</label>
+                <input type="number" id="smartphoneUsageHours" name="smartphoneUsageHours" min="0" step="1" aria-label="Enter Smartphone Usage Hours per Week" required>
+            </div>
+            <div>
+                <h2>Number of Devices</h2>
+                <label for="laptops">Number of Laptops:</label>
+                <input type="number" id="laptops" name="laptops" min="0" step="1" aria-label="Enter Number of Laptops" required>
+                <label for="desktops">Number of Desktops:</label>
+                <input type="number" id="desktops" name="desktops" min="0" step="1" aria-label="Enter Number of Desktops" required>
+                <label for="smartphones">Number of Smartphones:</label>
+                <input type="number" id="smartphones" name="smartphones" min="0" step="1" aria-label="Enter Number of 
