@@ -26,6 +26,10 @@
       "Laptop": 0.02,              
       "Desktop": 0.03,         
       "Smartphone": 0.01       
+    },
+    "teamsFactors": {
+      "messages": 0.0005,  
+      "calls": 0.2
     }
   }
   
