@@ -60,6 +60,18 @@
                 <label for="smartphoneUsageHours">Smartphone Usage Hours per Week:</label>
                 <input type="number" id="smartphoneUsageHours" name="smartphoneUsageHours" min="0" aria-label="Enter Smartphone Usage Hours per Week" required>
             </div>
+            <div>
+                <h2>Printing Activity</h2>
+                <label for="printing">Printing per Week:</label>
+                <select id="printing" name="printing" aria-label="Select Printing Range" required>
+                    <option value="0">I don't print anything</option>
+                    <option value="5-10">I print 5-10 pages per week</option>
+                    <option value="10-50">I print more than 10 but less than 50 per week</option>
+                    <option value="20/day">I print around 20 pages per day</option>
+                </select>
+            </div>
+
+
             <button type="submit">Calculate</button>
         </form>
         <div id="results">

@@ -1,4 +1,3 @@
-
 // device data points are in kg CO2e
 // transport factors are in kg CO2e per km converted to miles
 
@@ -6,11 +5,20 @@
 
 
 
+// Fetch carbon factors
+async function fetchFactors() {
+    try {
+        const response = await fetch('factors.json');
+        if (!response.ok) throw new Error('Network response was not ok');
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to fetch factors:', error);
+        alert('Failed to fetch carbon factors. Please try again later.');
+        throw error;
+    }
+}
 
-// manipulate the DOM to add or remove devices
-
-
-
+// Manipulate the DOM to add or remove devices
 let deviceCount = 1;
 
 function addDevice() {
@@ -37,18 +45,7 @@ function removeDevice(button) {
     container.removeChild(button.parentElement);
 }
 
-async function fetchFactors() {
-    try {
-        const response = await fetch('factors.json');
-        if (!response.ok) throw new Error('Network response was not ok');
-        return await response.json();
-    } catch (error) {
-        console.error('Failed to fetch factors:', error);
-        alert('Failed to fetch carbon factors. Please try again later.');
-        throw error;
-    }
-}
-
+// Calculate the carbon footprint
 async function calculateCarbonFootprint(event) {
     event.preventDefault(); // Prevent page refresh
 
@@ -69,6 +66,7 @@ async function calculateCarbonFootprint(event) {
     const laptopUsageHours = parseFloat(document.getElementById('laptopUsageHours').value) || 0;
     const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value) || 0;
     const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value) || 0;
+    const printing = document.getElementById('printing').value;
 
     // Calculate carbon emissions for devices
     let totalDeviceCarbon = 0;
@@ -107,8 +105,18 @@ async function calculateCarbonFootprint(event) {
     // Calculate carbon emissions for transport (using miles)
     const transportCarbon = transportDistanceMiles * (factors.transportFactors[transportMode] || 0);
 
+    // Calculate carbon emissions for printing
+    let printingCarbon = 0;
+    if (printing === '5-10') {
+        printingCarbon = 7.5 * (factors.printingFactors.perPage || 0) * 52;
+    } else if (printing === '10-50') {
+        printingCarbon = 30 * (factors.printingFactors.perPage || 0) * 52;
+    } else if (printing === '20/day') {
+        printingCarbon = 20 * (factors.printingFactors.perPage || 0) * 365;
+    }
+
     // Total carbon footprint
-    const totalCarbon = totalDeviceCarbon + emailCarbon + teamsMessageCarbon + teamsCallCarbon + transportCarbon;
+    const totalCarbon = totalDeviceCarbon + emailCarbon + teamsMessageCarbon + teamsCallCarbon + transportCarbon + printingCarbon;
 
     // Update the results in the HTML
     document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)}`;
