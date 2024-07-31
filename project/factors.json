@@ -1,36 +1,42 @@
 {
-    "deviceFactors": {
+  "deviceFactors": {
       "Desktop": {
-        "embodied": 300,            
-        "usagePerHour": 0.05        
+          "embodied": 300,
+          "usagePerHour": 0.05
       },
       "Laptop": {
-        "embodied": 50,             
-        "usagePerHour": 0.03        
+          "embodied": 50,
+          "usagePerHour": 0.03
       },
       "Smartphone": {
-        "embodied": 10,
-        "usagePerHour": 0.01    
+          "embodied": 10,
+          "usagePerHour": 0.01
       }
-    },
-    "emailFactors": {
-      "email": 0.01,   
+  },
+  "emailFactors": {
+      "email": 0.01,
       "attachmentEmail": 0.05
-    },
-    "transportFactors": {
-      "Car": 0.2,  
-      "Bus": 0.1,  
-      "Train": 0.05 
-    },
-    "usageHoursFactors": {
-      "Laptop": 0.02,              
-      "Desktop": 0.03,         
-      "Smartphone": 0.01       
-    },
-    "teamsFactors": {
-      "messages": 0.0005,  
+  },
+  "transportFactors": {
+      "Car": 0.2,
+      "Bus": 0.1,
+      "Train": 0.05
+  },
+  "usageHoursFactors": {
+      "Laptop": 0.02,
+      "Desktop": 0.03,
+      "Smartphone": 0.01
+  },
+  "teamsFactors": {
+      "messages": 0.0005,
       "calls": 0.2
-    }
+  },
+  "printingFactors": {
+      "perPage": 0.001
+  },
+  "workingPatternsFactors": {
+      "office": 1.0,
+      "home": 0.5
   }
-  
+}
 

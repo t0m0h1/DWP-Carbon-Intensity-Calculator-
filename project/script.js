@@ -67,6 +67,8 @@ async function calculateCarbonFootprint(event) {
     const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value) || 0;
     const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value) || 0;
     const printing = document.getElementById('printing').value;
+    const officePercentage = parseFloat(document.getElementById('officePercentage').value) || 0;
+    const workDays = parseFloat(document.getElementById('workDays').value) || 0;
 
     // Calculate carbon emissions for devices
     let totalDeviceCarbon = 0;
@@ -103,7 +105,11 @@ async function calculateCarbonFootprint(event) {
     const teamsCallCarbon = teamsCallTime * (factors.teamsFactors.calls || 0) * 52;
 
     // Calculate carbon emissions for transport (using miles)
-    const transportCarbon = transportDistanceMiles * (factors.transportFactors[transportMode] || 0);
+    const officeTransportMiles = transportDistanceMiles * (officePercentage / 100);
+    const homeTransportMiles = transportDistanceMiles * ((100 - officePercentage) / 100);
+    const officeTransportCarbon = officeTransportMiles * (factors.transportFactors[transportMode] || 0) * (workDays / 5);
+    const homeTransportCarbon = homeTransportMiles * (factors.transportFactors[transportMode] || 0) * ((5 - workDays) / 5);
+    const transportCarbon = officeTransportCarbon + homeTransportCarbon;
 
     // Calculate carbon emissions for printing
     let printingCarbon = 0;
