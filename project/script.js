@@ -6,6 +6,7 @@
 
 
 // Fetch carbon factors
+// Fetch carbon factors
 async function fetchFactors() {
     try {
         const response = await fetch('factors.json');
@@ -104,12 +105,10 @@ async function calculateCarbonFootprint(event) {
     const teamsMessageCarbon = teamsMessages * (factors.teamsFactors.messages || 0) * 52;
     const teamsCallCarbon = teamsCallTime * (factors.teamsFactors.calls || 0) * 52;
 
-    // Calculate carbon emissions for transport (using miles)
+    // Calculate carbon emissions for transport
     const officeTransportMiles = transportDistanceMiles * (officePercentage / 100);
     const homeTransportMiles = transportDistanceMiles * ((100 - officePercentage) / 100);
-    const officeTransportCarbon = officeTransportMiles * (factors.transportFactors[transportMode] || 0) * (workDays / 5);
-    const homeTransportCarbon = homeTransportMiles * (factors.transportFactors[transportMode] || 0) * ((5 - workDays) / 5);
-    const transportCarbon = officeTransportCarbon + homeTransportCarbon;
+    const transportCarbon = (officeTransportMiles + homeTransportMiles) * (factors.transportFactors[transportMode] || 0);
 
     // Calculate carbon emissions for printing
     let printingCarbon = 0;
