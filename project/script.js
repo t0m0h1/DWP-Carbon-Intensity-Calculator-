@@ -6,7 +6,6 @@
 
 
 // Fetch carbon factors
-// Fetch carbon factors
 async function fetchFactors() {
     try {
         const response = await fetch('factors.json');
@@ -126,3 +125,20 @@ async function calculateCarbonFootprint(event) {
     // Update the results in the HTML
     document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)}`;
 }
+
+// Collapsible section logic
+document.addEventListener("DOMContentLoaded", () => {
+    const collapsibles = document.querySelectorAll(".collapsible");
+
+    collapsibles.forEach((collapsible) => {
+        collapsible.addEventListener("click", function () {
+            this.classList.toggle("active");
+            const content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    });
+});

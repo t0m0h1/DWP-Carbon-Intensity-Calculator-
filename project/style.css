@@ -1,3 +1,4 @@
+/* Base styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #e9ecef;
@@ -17,17 +18,65 @@ body {
     border-radius: 12px;
     width: 100%;
     max-width: 700px;
-    margin: 20px auto; /* Center container and ensure it's centered horizontally */
+    margin: 20px auto;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
 
+/* Header styles */
 h1 {
     text-align: center;
     color: #333;
     margin-bottom: 30px;
     font-size: 28px;
+}
+
+/* Collapsible button styles */
+.collapsible {
+    background-color: #506985;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 6px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.collapsible.active, .collapsible:hover {
+    background-color: #00b389;
+}
+
+/* Collapsible content styles */
+.content {
+    display: none;
+    overflow: hidden;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+/* Always visible Devices section */
+#devicesContainer {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.device {
+    margin-bottom: 15px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
 }
 
 h2 {
@@ -36,6 +85,7 @@ h2 {
     font-size: 22px;
 }
 
+/* Form element styles */
 label {
     display: block;
     margin-bottom: 6px;
@@ -63,6 +113,7 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+/* Button styles */
 button {
     display: inline-block;
     padding: 14px 24px;
@@ -78,7 +129,7 @@ button {
 }
 
 button:hover {
-    background: #0056b3;
+    background: #1a589b;
     transform: scale(1.05);
 }
 
@@ -99,11 +150,7 @@ button.remove:active {
     background: #bd2130;
 }
 
-.button-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
+/* Results section styles */
 #results {
     background: #f8f9fa;
     padding: 20px;
@@ -112,17 +159,17 @@ button.remove:active {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 700px;
-    box-sizing: border-box; /* Ensure padding and border do not cause overflow */
+    box-sizing: border-box;
 }
 
 #results h3 {
     margin: 0;
     color: #333;
     font-size: 20px;
-    text-align: center; /* Center align text within results */
+    text-align: center;
 }
 
-/* Responsive design */
+/* Responsive design for phone screens */
 @media (max-width: 600px) {
     .container {
         padding: 15px;

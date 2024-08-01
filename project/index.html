@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DWP Digital Footprint Calculator</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>DWP Digital Footprint Calculator</h1>
         <form id="footprintForm" onsubmit="calculateCarbonFootprint(event)">
+            <!-- Devices Section (Always Visible) -->
+            <h2>Devices</h2>
             <div id="devicesContainer">
-                <h2>Devices</h2>
                 <div class="device">
                     <label for="deviceType0">Device Type:</label>
                     <select id="deviceType0" name="deviceType[]" aria-label="Select Device Type" required>
@@ -20,28 +21,32 @@
                         <option value="Smartphone">Smartphone</option>
                     </select>
                     <label for="deviceUsage0">Length of Use (years):</label>
-                    <input type="number" id="deviceUsage0" name="deviceUsage[]" min="0" aria-label="Enter Length of Use in Years" required>
+                    <input type="number" id="deviceUsage0" name="deviceUsage[]" min="1" step="1" aria-label="Enter Length of Use in Years" required>
                 </div>
             </div>
             <div class="button-container">
                 <button type="button" onclick="addDevice()">Add Device</button>
             </div>
-            <div>
-                <h2>Emails</h2>
+
+            <!-- Collapsible Sections -->
+            <button type="button" class="collapsible">Emails</button>
+            <div class="content">
                 <label for="emailCount">Number of Emails per Week:</label>
                 <input type="number" id="emailCount" name="emailCount" min="0" aria-label="Enter Number of Emails per Week" required>
                 <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
                 <input type="number" id="emailAttachmentCount" name="emailAttachmentCount" min="0" aria-label="Enter Number of Attachment Emails per Week" required>
             </div>
-            <div>
-                <h2>Teams Usage</h2>
+
+            <button type="button" class="collapsible">Teams Usage</button>
+            <div class="content">
                 <label for="teamsMessages">Number of Teams Messages per Week:</label>
                 <input type="number" id="teamsMessages" name="teamsMessages" min="0" aria-label="Enter Number of Teams Messages per Week" required>
                 <label for="teamsCallTime">Teams Call Time (hours per Week):</label>
                 <input type="number" id="teamsCallTime" name="teamsCallTime" min="0" aria-label="Enter Teams Call Time in Hours per Week" required>
             </div>
-            <div>
-                <h2>Transportation</h2>
+
+            <button type="button" class="collapsible">Transportation</button>
+            <div class="content">
                 <label for="transportMode">Transport Mode:</label>
                 <select id="transportMode" name="transportMode" aria-label="Select Transport Mode" required>
                     <option value="Train">Train</option>
@@ -51,8 +56,9 @@
                 <label for="transportDistance">Distance (miles) per Year:</label>
                 <input type="number" id="transportDistance" name="transportDistance" min="0" aria-label="Enter Distance in Miles per Year" required>
             </div>
-            <div>
-                <h2>Usage Hours</h2>
+
+            <button type="button" class="collapsible">Usage Hours</button>
+            <div class="content">
                 <label for="laptopUsageHours">Laptop Usage Hours per Week:</label>
                 <input type="number" id="laptopUsageHours" name="laptopUsageHours" min="0" aria-label="Enter Laptop Usage Hours per Week" required>
                 <label for="desktopUsageHours">Desktop Usage Hours per Week:</label>
@@ -60,8 +66,9 @@
                 <label for="smartphoneUsageHours">Smartphone Usage Hours per Week:</label>
                 <input type="number" id="smartphoneUsageHours" name="smartphoneUsageHours" min="0" aria-label="Enter Smartphone Usage Hours per Week" required>
             </div>
-            <div>
-                <h2>Printing Activity</h2>
+
+            <button type="button" class="collapsible">Printing Activity</button>
+            <div class="content">
                 <label for="printing">Printing per Week:</label>
                 <select id="printing" name="printing" aria-label="Select Printing Range" required>
                     <option value="0">I don't print anything</option>
@@ -71,14 +78,13 @@
                 </select>
             </div>
 
-            <div>
-                <h2>Working Patterns</h2>
+            <button type="button" class="collapsible">Working Patterns</button>
+            <div class="content">
                 <label for="officePercentage">Percentage of Time in the Office:</label>
                 <input type="number" id="officePercentage" name="officePercentage" min="0" max="100" aria-label="Enter Percentage of Time in the Office" required>
                 <label for="workDays">Number of Work Days per Week:</label>
                 <input type="number" id="workDays" name="workDays" min="1" max="7" aria-label="Enter Number of Work Days per Week" required>
             </div>
-
 
             <button type="submit">Calculate</button>
         </form>
