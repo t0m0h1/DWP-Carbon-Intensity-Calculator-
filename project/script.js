@@ -45,6 +45,13 @@ function removeDevice(button) {
     container.removeChild(button.parentElement);
 }
 
+// Convert selected range to min and max values
+function parseRange(range) {
+    if (range === 'none') return [0, 0];
+    const [min, max] = range.split('-').map(Number);
+    return [min, max];
+}
+
 // Calculate the carbon footprint
 async function calculateCarbonFootprint(event) {
     event.preventDefault(); // Prevent page refresh
@@ -57,8 +64,10 @@ async function calculateCarbonFootprint(event) {
     }
 
     // Get values from the inputs
-    const emailCount = parseFloat(document.getElementById('emailCount').value) || 0;
-    const emailAttachmentCount = parseFloat(document.getElementById('emailAttachmentCount').value) || 0;
+    const emailCount = document.querySelector('input[name="emailCount"]:checked')?.value ||
+                       document.getElementById('emailCount').value;
+    const emailAttachmentCount = document.querySelector('input[name="emailAttachmentCount"]:checked')?.value ||
+                                  document.getElementById('emailAttachmentCount').value;
     const teamsMessages = parseFloat(document.getElementById('teamsMessages').value) || 0;
     const teamsCallTime = parseFloat(document.getElementById('teamsCallTime').value) || 0;
     const transportMode = document.getElementById('transportMode').value;
@@ -97,8 +106,10 @@ async function calculateCarbonFootprint(event) {
     }
 
     // Calculate carbon emissions for emails
-    const emailCarbon = (emailCount * (factors.emailFactors.email || 0) * 52) + 
-                        (emailAttachmentCount * (factors.emailFactors.attachmentEmail || 0) * 52);
+    const [emailMin, emailMax] = parseRange(emailCount);
+    const [attachmentMin, attachmentMax] = parseRange(emailAttachmentCount);
+    const emailCarbon = ((emailMin + emailMax) / 2 * factors.emailFactors.email || 0 * 52) + 
+                        ((attachmentMin + attachmentMax) / 2 * factors.emailFactors.attachmentEmail || 0 * 52);
 
     // Calculate carbon emissions for Teams messages and calls
     const teamsMessageCarbon = teamsMessages * (factors.teamsFactors.messages || 0) * 52;
