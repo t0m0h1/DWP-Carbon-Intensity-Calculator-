@@ -3,8 +3,6 @@
 
 
 
-
-
 // Fetch carbon factors
 async function fetchFactors() {
     try {
@@ -64,17 +62,12 @@ async function calculateCarbonFootprint(event) {
     }
 
     // Get values from the inputs
-    const emailCount = document.querySelector('input[name="emailCount"]:checked')?.value ||
-                       document.getElementById('emailCount').value;
-    const emailAttachmentCount = document.querySelector('input[name="emailAttachmentCount"]:checked')?.value ||
-                                  document.getElementById('emailAttachmentCount').value;
-    const teamsMessages = parseFloat(document.getElementById('teamsMessages').value) || 0;
-    const teamsCallTime = parseFloat(document.getElementById('teamsCallTime').value) || 0;
+    const emailCount = document.getElementById('emailCount').value;
+    const emailAttachmentCount = document.getElementById('emailAttachmentCount').value;
+    const teamsMessages = document.getElementById('teamsMessages').value;
+    const teamsCallTime = document.getElementById('teamsCallTime').value;
     const transportMode = document.getElementById('transportMode').value;
-    const transportDistanceMiles = parseFloat(document.getElementById('transportDistance').value) || 0;
-    const laptopUsageHours = parseFloat(document.getElementById('laptopUsageHours').value) || 0;
-    const desktopUsageHours = parseFloat(document.getElementById('desktopUsageHours').value) || 0;
-    const smartphoneUsageHours = parseFloat(document.getElementById('smartphoneUsageHours').value) || 0;
+    const transportDistance = document.getElementById('transportDistance').value;
     const printing = document.getElementById('printing').value;
     const officePercentage = parseFloat(document.getElementById('officePercentage').value) || 0;
     const workDays = parseFloat(document.getElementById('workDays').value) || 0;
@@ -90,16 +83,8 @@ async function calculateCarbonFootprint(event) {
         const embodiedCarbon = deviceFactor.embodied || 0;
         const usageCarbonPerHour = deviceFactor.usagePerHour || 0;
 
-        let deviceUsageHours = 0;
-        if (deviceType === 'Desktop') {
-            deviceUsageHours = desktopUsageHours;
-        } else if (deviceType === 'Laptop') {
-            deviceUsageHours = laptopUsageHours;
-        } else if (deviceType === 'Smartphone') {
-            deviceUsageHours = smartphoneUsageHours;
-        }
-
-        const annualUsageCarbon = deviceUsageYears > 0 ? (deviceUsageHours * 52 * usageCarbonPerHour) : 0;
+        // Calculate annual usage carbon
+        const annualUsageCarbon = deviceUsageYears > 0 ? (52 * usageCarbonPerHour) : 0;
 
         // Add embodied carbon and annual usage carbon
         totalDeviceCarbon += embodiedCarbon + annualUsageCarbon;
@@ -112,10 +97,11 @@ async function calculateCarbonFootprint(event) {
                         ((attachmentMin + attachmentMax) / 2 * factors.emailFactors.attachmentEmail || 0 * 52);
 
     // Calculate carbon emissions for Teams messages and calls
-    const teamsMessageCarbon = teamsMessages * (factors.teamsFactors.messages || 0) * 52;
-    const teamsCallCarbon = teamsCallTime * (factors.teamsFactors.calls || 0) * 52;
+    const teamsMessageCarbon = parseRange(teamsMessages)[0] * (factors.teamsFactors.messages || 0) * 52;
+    const teamsCallCarbon = parseRange(teamsCallTime)[0] * (factors.teamsFactors.calls || 0) * 52;
 
     // Calculate carbon emissions for transport
+    const transportDistanceMiles = parseRange(transportDistance)[0];
     const officeTransportMiles = transportDistanceMiles * (officePercentage / 100);
     const homeTransportMiles = transportDistanceMiles * ((100 - officePercentage) / 100);
     const transportCarbon = (officeTransportMiles + homeTransportMiles) * (factors.transportFactors[transportMode] || 0);

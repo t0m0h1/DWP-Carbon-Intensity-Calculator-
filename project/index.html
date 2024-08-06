@@ -51,15 +51,26 @@
                 </select>
             </div>
 
-
+            <!-- Teams Usage Section -->
             <button type="button" class="collapsible">Teams Usage</button>
             <div class="content">
                 <label for="teamsMessages">Number of Teams Messages per Week:</label>
-                <input type="number" id="teamsMessages" name="teamsMessages" min="0" aria-label="Enter Number of Teams Messages per Week" required>
+                <select id="teamsMessages" name="teamsMessages" aria-label="Select Number of Teams Messages per Week" required>
+                    <option value="0-50">0-50</option>
+                    <option value="51-100">51-100</option>
+                    <option value="101-150">101-150</option>
+                    <option value="151-200">151-200</option>
+                </select>
                 <label for="teamsCallTime">Teams Call Time (hours per Week):</label>
-                <input type="number" id="teamsCallTime" name="teamsCallTime" min="0" aria-label="Enter Teams Call Time in Hours per Week" required>
+                <select id="teamsCallTime" name="teamsCallTime" aria-label="Select Teams Call Time per Week" required>
+                    <option value="0-1">0-1</option>
+                    <option value="2-5">2-5</option>
+                    <option value="6-10">6-10</option>
+                    <option value="11-15">11-15</option>
+                </select>
             </div>
 
+            <!-- Transportation Section -->
             <button type="button" class="collapsible">Transportation</button>
             <div class="content">
                 <label for="transportMode">Transport Mode:</label>
@@ -69,18 +80,16 @@
                     <option value="Bicycle/Foot">Bicycle/Foot</option>
                 </select>
                 <label for="transportDistance">Distance (miles) per Year:</label>
-                <input type="number" id="transportDistance" name="transportDistance" min="0" aria-label="Enter Distance in Miles per Year" required>
+                <select id="transportDistance" name="transportDistance" aria-label="Select Distance in Miles per Year" required>
+                    <option value="0-100">0-100</option>
+                    <option value="101-500">101-500</option>
+                    <option value="501-1000">501-1000</option>
+                    <option value="1001-5000">1001-5000</option>
+                </select>
             </div>
 
-            <button type="button" class="collapsible">Usage Hours</button>
-            <div class="content">
-                <label for="laptopUsageHours">Laptop Usage Hours per Week:</label>
-                <input type="number" id="laptopUsageHours" name="laptopUsageHours" min="0" aria-label="Enter Laptop Usage Hours per Week" required>
-                <label for="desktopUsageHours">Desktop Usage Hours per Week:</label>
-                <input type="number" id="desktopUsageHours" name="desktopUsageHours" min="0" aria-label="Enter Desktop Usage Hours per Week" required>
-                <label for="smartphoneUsageHours">Smartphone Usage Hours per Week:</label>
-                <input type="number" id="smartphoneUsageHours" name="smartphoneUsageHours" min="0" aria-label="Enter Smartphone Usage Hours per Week" required>
-            </div>
+            <!-- Remove Usage Hours Section -->
+            <!-- Removed -->
 
             <button type="button" class="collapsible">Printing Activity</button>
             <div class="content">

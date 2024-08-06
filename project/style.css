@@ -57,6 +57,7 @@ h1 {
     overflow: hidden;
     padding: 0 10px;
     margin-bottom: 10px;
+    transition: max-height 0.2s ease-out;
 }
 
 /* Always visible Devices section */
