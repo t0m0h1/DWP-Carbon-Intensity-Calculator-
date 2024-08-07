@@ -20,7 +20,8 @@
   "transportFactors": {
       "Car": 0.2,
       "Bus": 0.1,
-      "Train": 0.05
+      "Train": 0.05,
+      "Bicycle/Foot": 0.0
   },
   "usageHoursFactors": {
       "Laptop": 0.02,
