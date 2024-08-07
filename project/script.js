@@ -26,8 +26,8 @@ function addDevice() {
     newDevice.innerHTML = `
         <label for="deviceType${deviceCount}">Device Type:</label>
         <select id="deviceType${deviceCount}" name="deviceType[]" aria-label="Select Device Type" required>
-            <option value="Desktop">Desktop</option>
-            <option value="Laptop">Laptop</option>
+            <option value="Desktop">Laptop</option>
+            <option value="Laptop">Desktop</option>
             <option value="Smartphone">Smartphone</option>
         </select>
         <label for="deviceUsage${deviceCount}">Length of Use (years):</label>
@@ -100,11 +100,14 @@ async function calculateCarbonFootprint(event) {
     const teamsMessageCarbon = parseRange(teamsMessages)[0] * (factors.teamsFactors.messages || 0) * 52;
     const teamsCallCarbon = parseRange(teamsCallTime)[0] * (factors.teamsFactors.calls || 0) * 52;
 
+
     // Calculate carbon emissions for transport
     const transportDistanceMiles = parseRange(transportDistance)[0];
     const officeTransportMiles = transportDistanceMiles * (officePercentage / 100);
     const homeTransportMiles = transportDistanceMiles * ((100 - officePercentage) / 100);
     const transportCarbon = (officeTransportMiles + homeTransportMiles) * (factors.transportFactors[transportMode] || 0);
+
+
 
     // Calculate carbon emissions for printing
     let printingCarbon = 0;
@@ -139,3 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+
+

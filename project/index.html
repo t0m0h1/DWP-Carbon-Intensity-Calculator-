@@ -16,8 +16,8 @@
                 <div class="device">
                     <label for="deviceType0">Device Type:</label>
                     <select id="deviceType0" name="deviceType[]" aria-label="Select Device Type" required>
-                        <option value="Desktop">Desktop</option>
                         <option value="Laptop">Laptop</option>
+                        <option value="Desktop">Desktop</option>
                         <option value="Smartphone">Smartphone</option>
                     </select>
                     <label for="deviceUsage0">Length of Use (years):</label>
@@ -33,22 +33,22 @@
             <button type="button" class="collapsible">Emails</button>
             <div class="content">
                 <label for="emailCount">Number of Emails per Week:</label>
-                <select id="emailCount" name="emailCount" aria-label="Select Number of Emails per Week" required>
-                    <option value="none">None</option>
-                    <option value="10-20">10-20</option>
-                    <option value="30-40">30-40</option>
-                    <option value="50-60">50-60</option>
-                    <option value="70-80">70-80</option>
-                </select>
+                    <select id="emailCount" name="emailCount" aria-label="Select Number of Emails per Week" required>
+                        <option value="none">None</option>
+                        <option value="less than 20">less than 20</option>
+                        <option value="20-50">20-50</option>
+                        <option value="50-100">50-100</option>
+                        <option value="150">100+</option>
+                    </select>
 
-                <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
-                <select id="emailAttachmentCount" name="emailAttachmentCount" aria-label="Select Number of Attachment Emails per Week" required>
-                    <option value="none">None</option>
-                    <option value="10-20">10-20</option>
-                    <option value="30-40">30-40</option>
-                    <option value="50-60">50-60</option>
-                    <option value="70-80">70-80</option>
-                </select>
+                    <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
+                    <select id="emailAttachmentCount" name="emailAttachmentCount" aria-label="Select Number of Attachment Emails per Week" required>
+                        <option value="none">None</option>
+                        <option value="10-20">10-20</option>
+                        <option value="30-40">30-40</option>
+                        <option value="50-60">50-60</option>
+                        <option value="70-80">70-80</option>
+                    </select>
             </div>
 
             <!-- Teams Usage Section -->
@@ -67,24 +67,27 @@
                     <option value="2-5">2-5</option>
                     <option value="6-10">6-10</option>
                     <option value="11-15">11-15</option>
+                    <option value="15+">15+</option>
                 </select>
             </div>
 
             <!-- Transportation Section -->
             <button type="button" class="collapsible">Transportation</button>
             <div class="content">
-                <label for="transportMode">Transport Mode:</label>
+                <label for="transportMode">Transport Mode: (commuting) </label>
                 <select id="transportMode" name="transportMode" aria-label="Select Transport Mode" required>
-                    <option value="Train">Train</option>
-                    <option value="Car">Car</option>
                     <option value="Bicycle/Foot">Bicycle/Foot</option>
+                    <option value="Train">Train</option>
+                    <option value="Bus">Bus</option>
+                    <option value="Car">Car</option>
+
+
                 </select>
-                <label for="transportDistance">Distance (miles) per Year:</label>
+                <label for="transportDistance">Distance (miles) per Week:</label>
                 <select id="transportDistance" name="transportDistance" aria-label="Select Distance in Miles per Year" required>
-                    <option value="0-100">0-100</option>
-                    <option value="101-500">101-500</option>
-                    <option value="501-1000">501-1000</option>
-                    <option value="1001-5000">1001-5000</option>
+                    <option value="0-100">0-25</option>
+                    <option value="101-500">26-50</option>
+                    <option value="501-1000">51-100+</option>
                 </select>
             </div>
 
@@ -115,7 +118,17 @@
         <div id="results">
             <h3>Total Carbon Emissions: <span id="totalCarbon">0.00</span> kg CO2e</h3>
         </div>
+
+        <!-- <div class="breakdown">
+            <h2>Breakdown of Emissions</h2>
+
+
+        </div> -->
+
+
     </div>
     <script src="script.js"></script>
 </body>
 </html>
+
+
