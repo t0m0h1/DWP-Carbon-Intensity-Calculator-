@@ -50,7 +50,7 @@ function parseRange(range) {
     return [min, max];
 }
 
-// Calculate the carbon footprint
+
 async function calculateCarbonFootprint(event) {
     event.preventDefault(); // Prevent page refresh
 
@@ -90,16 +90,24 @@ async function calculateCarbonFootprint(event) {
         totalDeviceCarbon += embodiedCarbon + annualUsageCarbon;
     }
 
+    // Update the breakdown for device usage
+    document.getElementById('deviceUsage').innerText = `Device Usage: ${totalDeviceCarbon.toFixed(2)} kg CO2e`;
+
     // Calculate carbon emissions for emails
     const [emailMin, emailMax] = parseRange(emailCount);
     const [attachmentMin, attachmentMax] = parseRange(emailAttachmentCount);
     const emailCarbon = ((emailMin + emailMax) / 2 * factors.emailFactors.email || 0 * 52) + 
                         ((attachmentMin + attachmentMax) / 2 * factors.emailFactors.attachmentEmail || 0 * 52);
 
+    // Update the breakdown for email usage
+    document.getElementById('emailUsage').innerText = `Email Usage: ${emailCarbon.toFixed(2)} kg CO2e`;
+
     // Calculate carbon emissions for Teams messages and calls
     const teamsMessageCarbon = parseRange(teamsMessages)[0] * (factors.teamsFactors.messages || 0) * 52;
     const teamsCallCarbon = parseRange(teamsCallTime)[0] * (factors.teamsFactors.calls || 0) * 52;
 
+    // Update the breakdown for Teams usage
+    document.getElementById('teamsUsage').innerText = `Teams Usage: ${(teamsMessageCarbon + teamsCallCarbon).toFixed(2)} kg CO2e`;
 
     // Calculate carbon emissions for transport
     const transportDistanceMiles = parseRange(transportDistance)[0];
@@ -107,7 +115,8 @@ async function calculateCarbonFootprint(event) {
     const homeTransportMiles = transportDistanceMiles * ((100 - officePercentage) / 100);
     const transportCarbon = (officeTransportMiles + homeTransportMiles) * (factors.transportFactors[transportMode] || 0);
 
-
+    // Update the breakdown for transportation
+    document.getElementById('transportation').innerText = `Transportation: ${transportCarbon.toFixed(2)} kg CO2e`;
 
     // Calculate carbon emissions for printing
     let printingCarbon = 0;
@@ -119,12 +128,18 @@ async function calculateCarbonFootprint(event) {
         printingCarbon = 20 * (factors.printingFactors.perPage || 0) * 365;
     }
 
+    // Update the breakdown for printing
+    document.getElementById('printing').innerText = `Printing: ${printingCarbon.toFixed(2)} kg CO2e`;
+
     // Total carbon footprint
     const totalCarbon = totalDeviceCarbon + emailCarbon + teamsMessageCarbon + teamsCallCarbon + transportCarbon + printingCarbon;
 
-    // Update the results in the HTML
-    document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)}`;
+    // Update the total carbon footprint
+    document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)} kg CO2e`;
 }
+
+
+
 
 // Collapsible section logic
 document.addEventListener("DOMContentLoaded", () => {
@@ -142,6 +157,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
-
-
