@@ -92,8 +92,7 @@
                 </select>
             </div>
 
-            <!-- Remove Usage Hours Section -->
-            <!-- Removed -->
+
 
             <button type="button" class="collapsible">Printing Activity</button>
             <div class="content">
@@ -108,11 +107,28 @@
 
             <button type="button" class="collapsible">Working Patterns</button>
             <div class="content">
-                <label for="officePercentage">Percentage of Time in the Office:</label>
-                <input type="number" id="officePercentage" name="officePercentage" min="0" max="100" aria-label="Enter Percentage of Time in the Office" required>
-                <label for="workDays">Number of Work Days per Week:</label>
-                <input type="number" id="workDays" name="workDays" min="1" max="7" aria-label="Enter Number of Work Days per Week" required>
+                <label for="wfhDays">Work From Home Days per Week:</label>
+                <input type="number" id="wfhDays" name="wfhDays" min="0" max="7" aria-label="Enter Number of WFH Days per Week" required>
+            
+                <label for="officeDays">Office Days per Week:</label>
+                <input type="number" id="officeDays" name="officeDays" min="0" max="7" aria-label="Enter Number of Office Days per Week" required>
+            
+                <label for="commuteType">Commute Type:</label>
+                <select id="commuteType" name="commuteType" aria-label="Select Commute Type" required>
+                    <option value="Bicycle/Foot">Bicycle/Foot</option>
+                    <option value="Train">Train</option>
+                    <option value="Bus">Bus</option>
+                    <option value="Car">Car</option>
+                </select>
+           
+                <label for="commuteDistance">Commute Distance (miles per day):</label>
+                <input type="number" id="commuteDistance" name="commuteDistance" min="1" aria-label="Enter Commute Distance in Miles" required>
             </div>
+
+
+
+
+
 
             <button type="submit">Calculate</button>
         </form>
