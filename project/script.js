@@ -26,8 +26,8 @@ function addDevice() {
     newDevice.innerHTML = `
         <label for="deviceType${deviceCount}">Device Type:</label>
         <select id="deviceType${deviceCount}" name="deviceType[]" aria-label="Select Device Type" required>
-            <option value="Desktop">Laptop</option>
-            <option value="Laptop">Desktop</option>
+            <option value="Laptop">Laptop</option>
+            <option value="Desktop">Desktop</option>
             <option value="Smartphone">Smartphone</option>
         </select>
         <label for="deviceUsage${deviceCount}">Length of Use (years):</label>
@@ -43,11 +43,29 @@ function removeDevice(button) {
     container.removeChild(button.parentElement);
 }
 
+
 // Convert selected range to min and max values
 function parseRange(range) {
+    // Handle 'none' case
     if (range === 'none') return [0, 0];
-    const [min, max] = range.split('-').map(Number);
-    return [min, max];
+
+    // Split the range by '-'
+    const parts = range.split('-');
+
+    // If split results in exactly two parts, try to parse them as numbers
+    if (parts.length === 2) {
+        const min = parseFloat(parts[0].trim());
+        const max = parseFloat(parts[1].trim());
+
+        // Check if both min and max are valid numbers
+        if (!isNaN(min) && !isNaN(max)) {
+            return [min, max];
+        }
+    }
+
+    // If split failed or values aren't valid numbers, return default [0, 0]
+    console.warn(`Unexpected range format: ${range}`);
+    return [0, 0];
 }
 
 
