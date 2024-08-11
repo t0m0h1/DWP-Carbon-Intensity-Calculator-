@@ -212,3 +212,31 @@ button.remove:active {
 #emissionsBreakdown p:last-child {
     border-bottom: none;
 }
+
+
+
+#emissionsBreakdown {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px; /* Existing margin */
+    margin-bottom: 20px; /* Add margin at the bottom */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+#emissionsBreakdown p {
+    margin: 0 0 15px 0; /* Add bottom margin to each paragraph */
+    color: #333;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#emissionsBreakdown p:last-child {
+    border-bottom: none;
+    margin-bottom: 0; /* Remove bottom margin from the last paragraph */
+}
