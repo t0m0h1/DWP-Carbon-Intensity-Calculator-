@@ -3,6 +3,32 @@
 
 
 
+
+
+
+// Collapsible section logic
+document.addEventListener("DOMContentLoaded", () => {
+    const collapsibles = document.querySelectorAll(".collapsible");
+
+    collapsibles.forEach((collapsible) => {
+        collapsible.addEventListener("click", function () {
+            this.classList.toggle("active");
+            const content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    });
+});
+
+
+
+
+
+
+
 // Fetch carbon factors
 async function fetchFactors() {
     try {
@@ -70,6 +96,10 @@ function parseRange(range) {
 
 
 
+
+
+
+
 async function calculateCarbonFootprint(event) {
     event.preventDefault(); // Prevent page refresh
 
@@ -80,7 +110,7 @@ async function calculateCarbonFootprint(event) {
         return; // Exit if fetching factors fails
     }
 
-    // Get values from the inputs
+    // Get values from the inputs (same as before)
     const emailCount = document.getElementById('emailCount').value;
     const emailAttachmentCount = document.getElementById('emailAttachmentCount').value;
     const teamsMessages = document.getElementById('teamsMessages').value;
@@ -94,7 +124,7 @@ async function calculateCarbonFootprint(event) {
     const commuteType = document.getElementById('commuteType').value;
     const commuteDistance = parseFloat(document.getElementById('commuteDistance').value) || 0;
 
-    // Calculate carbon emissions for devices
+    // Calculate emissions (same as before)
     let totalDeviceCarbon = 0;
     const deviceTypes = document.getElementsByName('deviceType[]');
     const deviceUsages = document.getElementsByName('deviceUsage[]');
@@ -105,41 +135,30 @@ async function calculateCarbonFootprint(event) {
         const embodiedCarbon = deviceFactor.embodied || 0;
         const usageCarbonPerHour = deviceFactor.usagePerHour || 0;
 
-        // Calculate annual usage carbon
-        const annualUsageCarbon = deviceUsageYears > 0 ? (52 * usageCarbonPerHour * 8) : 0; // Assume 8 hours/day
-
-        // Add embodied carbon and annual usage carbon
+        const annualUsageCarbon = deviceUsageYears > 0 ? (52 * usageCarbonPerHour * 8) : 0;
         totalDeviceCarbon += embodiedCarbon + annualUsageCarbon;
     }
 
-    // Update the breakdown for device usage
     document.getElementById('deviceUsage').innerText = `Device Usage: ${totalDeviceCarbon.toFixed(2)} kg CO2e`;
 
-    // Calculate carbon emissions for emails
     const [emailMin, emailMax] = parseRange(emailCount);
     const [attachmentMin, attachmentMax] = parseRange(emailAttachmentCount);
     const emailCarbon = ((emailMin + emailMax) / 2 * factors.emailFactors.email || 0 * 52) + 
                         ((attachmentMin + attachmentMax) / 2 * factors.emailFactors.attachmentEmail || 0 * 52);
 
-    // Update the breakdown for email usage
     document.getElementById('emailUsage').innerText = `Email Usage: ${emailCarbon.toFixed(2)} kg CO2e`;
 
-    // Calculate carbon emissions for Teams messages and calls
     const teamsMessageCarbon = (parseRange(teamsMessages)[0] * (factors.teamsFactors.messages || 0) * 52);
     const teamsCallCarbon = (parseRange(teamsCallTime)[0] * (factors.teamsFactors.calls || 0) * 52);
 
-    // Update the breakdown for Teams usage
     document.getElementById('teamsUsage').innerText = `Teams Usage: ${(teamsMessageCarbon + teamsCallCarbon).toFixed(2)} kg CO2e`;
 
-    // Calculate carbon emissions for transport
     const transportDistanceMiles = parseRange(transportDistance)[0];
-    const totalTransportDistance = transportDistanceMiles * 52; // Convert weekly distance to yearly
+    const totalTransportDistance = transportDistanceMiles * 52;
     const transportCarbon = totalTransportDistance * (factors.transportFactors[transportMode] || 0);
 
-    // Update the breakdown for transportation
     document.getElementById('transportation').innerText = `Transportation: ${transportCarbon.toFixed(2)} kg CO2e`;
 
-    // Calculate carbon emissions for printing
     let printingCarbon = 0;
     if (printing === '5-10') {
         printingCarbon = 7.5 * (factors.printingFactors.perPage || 0) * 52;
@@ -149,51 +168,60 @@ async function calculateCarbonFootprint(event) {
         printingCarbon = 20 * (factors.printingFactors.perPage || 0) * 365;
     }
 
-    // Update the breakdown for printing
     document.getElementById('printing').innerText = `Printing: ${printingCarbon.toFixed(2)} kg CO2e`;
 
-    // Calculate carbon emissions for working patterns
     const officeDaysPerYear = officeDays * 52;
     const wfhDaysPerYear = wfhDays * 52;
     const commuteDistancePerYear = commuteDistance * 365;
-    
+
     const officeCarbon = officeDaysPerYear * factors.workingPatternsFactors.office;
     const wfhCarbon = wfhDaysPerYear * factors.workingPatternsFactors.home;
     const commuteCarbon = commuteDistancePerYear * (factors.transportFactors[commuteType] || 0);
 
-    // Update the breakdown for working patterns
     document.getElementById('workingPatterns').innerText = `Working Patterns: ${(officeCarbon + wfhCarbon + commuteCarbon).toFixed(2)} kg CO2e`;
 
-    // Total carbon footprint
     const totalCarbon = totalDeviceCarbon + emailCarbon + teamsMessageCarbon + teamsCallCarbon + transportCarbon + printingCarbon + officeCarbon + wfhCarbon + commuteCarbon;
 
-    // Update the total carbon footprint
     document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)} kg CO2e`;
+
+    // Prepare data for the chart
+    const chartData = {
+        labels: ['Device Usage', 'Email Usage', 'Teams Usage', 'Transportation', 'Printing', 'Working Patterns'],
+        datasets: [{
+            label: 'Carbon Emissions (kg CO2e)',
+            data: [totalDeviceCarbon, emailCarbon, (teamsMessageCarbon + teamsCallCarbon), transportCarbon, printingCarbon, (officeCarbon + wfhCarbon + commuteCarbon)],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Render the chart
+    const ctx = document.getElementById('emissionsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar', // or 'pie', 'line', etc.
+        data: chartData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
-
-
-
-
-
-
-
-
-
-
-// Collapsible section logic
-document.addEventListener("DOMContentLoaded", () => {
-    const collapsibles = document.querySelectorAll(".collapsible");
-
-    collapsibles.forEach((collapsible) => {
-        collapsible.addEventListener("click", function () {
-            this.classList.toggle("active");
-            const content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
-    });
-});
