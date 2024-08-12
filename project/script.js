@@ -3,7 +3,6 @@
 
 
 
-
 // Collapsible section logic
 document.addEventListener("DOMContentLoaded", () => {
     const collapsibles = document.querySelectorAll(".collapsible");
@@ -18,6 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 content.style.display = "block";
             }
         });
+    });
+
+    // Tip button toggle logic
+    const tipButton = document.getElementById('tip');
+    const introSection = document.getElementById('intro');
+
+    tipButton.addEventListener('click', () => {
+        if (introSection.hidden) {
+            introSection.hidden = false;
+        } else {
+            introSection.hidden = true;
+        }
     });
 });
 
@@ -215,4 +226,3 @@ async function calculateCarbonFootprint(event) {
         }
     });
 }
-
