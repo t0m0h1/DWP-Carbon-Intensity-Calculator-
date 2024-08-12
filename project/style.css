@@ -1,7 +1,7 @@
 /* Base styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #e9ecef;
+    font-family: Arial, Helvetica, sans-serif; /* GOV.UK font */
+    background-color: #f4f4f4; /* GOV.UK light grey background */
     margin: 0;
     padding: 15px;
     display: flex;
@@ -9,13 +9,51 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    color: #333; /* GOV.UK text color */
 }
 
-.container {
-    background: #ffffff;
+/* Links */
+a {
+    color: #005ea5; /* GOV.UK link color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Tip Button */
+#tip {
+    background-color: #1d70b8; /* GOV.UK blue */
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    border: none;
+    font-size: 12px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    margin-left: 70px;
+    float: left;
+}
+
+#tip.active, #tip:hover {
+    background-color: #003c71; /* GOV.UK dark blue */
+}
+
+/* Intro Section */
+#intro {
+    margin-bottom: 30px;
+}
+
+/* Main Container */
+.container, #footprintForm {
+    background: white;
     padding: 30px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    border-radius: 5px;
     width: 100%;
     max-width: 700px;
     margin: 20px auto;
@@ -24,34 +62,42 @@ body {
     flex-direction: column;
 }
 
-/* Header styles */
-h1 {
-    text-align: center;
+/* Headings */
+h1, h2 {
     color: #333;
-    margin-bottom: 30px;
-    font-size: 28px;
+    font-weight: normal; /* GOV.UK font weight */
 }
 
-/* Collapsible button styles */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* Collapsible Sections */
 .collapsible {
-    background-color: #506985;
+    background-color: #1d70b8; /* GOV.UK blue */
     color: white;
     cursor: pointer;
     padding: 10px;
     text-align: left;
     border: none;
-    outline: none;
     font-size: 16px;
-    border-radius: 6px;
+    border-radius: 5px;
     width: 100%;
     margin-bottom: 10px;
 }
 
 .collapsible.active, .collapsible:hover {
-    background-color: #00b389;
+    background-color: #003c71; /* GOV.UK dark blue */
 }
 
-/* Collapsible content styles */
+/* Collapsible Content */
 .content {
     display: none;
     overflow: hidden;
@@ -60,19 +106,16 @@ h1 {
     transition: max-height 0.2s ease-out;
 }
 
-/* Always visible Devices section */
+/* Devices Section */
 #devicesContainer {
     padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     margin-bottom: 30px;
 }
 
-.device {
-    margin-bottom: 15px;
-}
-
+/* Button Container */
 .button-container {
     display: flex;
     justify-content: center;
@@ -80,49 +123,45 @@ h1 {
     padding-top: 20px;
 }
 
-h2 {
-    color: #444;
-    margin-bottom: 15px;
-    font-size: 22px;
-}
-
-/* Form element styles */
+/* Form Labels */
 label {
     display: block;
     margin-bottom: 6px;
-    color: #666;
+    color: #333;
     font-size: 16px;
 }
 
+/* Form Elements */
 select, input[type="number"] {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    border: 1px solid #b1b1b1; /* GOV.UK input border color */
+    border-radius: 5px;
     box-sizing: border-box;
     font-size: 16px;
 }
 
+/* Remove spinners for number inputs */
 input[type="number"] {
-    -moz-appearance: textfield; /* Hide spinners in Firefox */
+    -moz-appearance: textfield;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none; /* Hide spinners in Chrome */
+    -webkit-appearance: none;
     margin: 0;
 }
 
-/* Button styles */
+/* Buttons */
 button {
     display: inline-block;
     padding: 14px 24px;
-    background: #007bff;
+    background: #1d70b8; /* GOV.UK blue */
     border: none;
     color: white;
     font-size: 16px;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
     margin: 10px;
@@ -130,34 +169,35 @@ button {
 }
 
 button:hover {
-    background: #1a589b;
+    background: #003c71; /* GOV.UK dark blue */
     transform: scale(1.05);
 }
 
 button:active {
-    background: #004080;
+    background: #002f6c; /* Even darker GOV.UK blue */
     transform: scale(1);
 }
 
 button.remove {
-    background: #dc3545;
+    background: #d4351c; /* GOV.UK red */
 }
 
 button.remove:hover {
-    background: #c82333;
+    background: #c00b0d; /* Darker GOV.UK red */
 }
 
 button.remove:active {
-    background: #bd2130;
+    background: #a10000; /* Even darker GOV.UK red */
 }
 
-/* Results section styles */
+/* Results Section */
 #results {
-    background: #f8f9fa;
+    background: white;
     padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-top: 60px; /* Increased margin to create space */
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     width: 100%;
     max-width: 700px;
     box-sizing: border-box;
@@ -168,6 +208,62 @@ button.remove:active {
     color: #333;
     font-size: 20px;
     text-align: center;
+}
+
+/* Breakdown Section */
+#emissionsBreakdown {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 60px; /* Adjusted spacing from the previous section */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Two-column grid */
+    gap: 10px; /* Space between columns */
+}
+
+/* Breakdown section header */
+#emissionsBreakdown h3 {
+    margin: 0;
+    color: #333;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd; /* Thicker border for header */
+}
+
+/* Breakdown rows */
+#emissionsBreakdown .breakdown-row {
+    display: contents; /* Allow grid items to align correctly */
+}
+
+#emissionsBreakdown .breakdown-header, 
+#emissionsBreakdown .breakdown-data {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Subtle horizontal line for each row */
+}
+
+#emissionsBreakdown .breakdown-header {
+    font-weight: bold;
+    background-color: #f4f4f4; /* Light grey background for header */
+    border-top: 2px solid #ddd; /* Border at the top of the section */
+}
+
+#emissionsBreakdown .breakdown-data {
+    text-align: left; /* Align text to the left for table-like appearance */
+}
+
+/* Hide last border */
+#emissionsBreakdown .breakdown-row:last-child .breakdown-data {
+    border-bottom: none; /* Remove border from the last row */
+}
+
+/* Optional: Add styling for specific cells if needed */
+#emissionsBreakdown .breakdown-header {
+    font-weight: bold;
 }
 
 /* Responsive design for phone screens */
@@ -185,58 +281,15 @@ button.remove:active {
         padding: 10px;
         font-size: 14px;
     }
-}
 
+    #tip {
+        margin-left: 0; /* Center the tip button on smaller screens */
+        float: none; /* Remove floating */
+        display: block; /* Make it block-level */
+        margin: 0 auto 10px; /* Center horizontally */
+    }
 
-/* Breakdown section styles */
-#emissionsBreakdown {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 700px;
-    box-sizing: border-box;
-}
-
-#emissionsBreakdown p {
-    margin: 0;
-    color: #333;
-    font-size: 20px;
-    text-align: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-#emissionsBreakdown p:last-child {
-    border-bottom: none;
-}
-
-
-
-#emissionsBreakdown {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 45px; /* Existing margin */
-    margin-bottom: 20px; /* Add margin at the bottom */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 700px;
-    box-sizing: border-box;
-}
-
-#emissionsBreakdown p {
-    margin: 0 0 15px 0; /* Add bottom margin to each paragraph */
-    color: #333;
-    font-size: 20px;
-    text-align: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-#emissionsBreakdown p:last-child {
-    border-bottom: none;
-    margin-bottom: 0; /* Remove bottom margin from the last paragraph */
+    #emissionsBreakdown {
+        grid-template-columns: 1fr; /* Single column on small screens */
+    }
 }
