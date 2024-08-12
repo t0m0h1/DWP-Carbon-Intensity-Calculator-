@@ -4,8 +4,6 @@
 
 
 
-
-
 // Collapsible section logic
 document.addEventListener("DOMContentLoaded", () => {
     const collapsibles = document.querySelectorAll(".collapsible");
@@ -22,12 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
-
-
-
-
-
 
 // Fetch carbon factors
 async function fetchFactors() {
@@ -69,7 +61,6 @@ function removeDevice(button) {
     container.removeChild(button.parentElement);
 }
 
-
 // Convert selected range to min and max values
 function parseRange(range) {
     // Handle 'none' case
@@ -94,12 +85,6 @@ function parseRange(range) {
     return [0, 0];
 }
 
-
-
-
-
-
-
 async function calculateCarbonFootprint(event) {
     event.preventDefault(); // Prevent page refresh
 
@@ -110,7 +95,7 @@ async function calculateCarbonFootprint(event) {
         return; // Exit if fetching factors fails
     }
 
-    // Get values from the inputs (same as before)
+    // Get values from the inputs
     const emailCount = document.getElementById('emailCount').value;
     const emailAttachmentCount = document.getElementById('emailAttachmentCount').value;
     const teamsMessages = document.getElementById('teamsMessages').value;
@@ -124,7 +109,7 @@ async function calculateCarbonFootprint(event) {
     const commuteType = document.getElementById('commuteType').value;
     const commuteDistance = parseFloat(document.getElementById('commuteDistance').value) || 0;
 
-    // Calculate emissions (same as before)
+    // Calculate emissions from devices
     let totalDeviceCarbon = 0;
     const deviceTypes = document.getElementsByName('deviceType[]');
     const deviceUsages = document.getElementsByName('deviceUsage[]');
@@ -141,6 +126,7 @@ async function calculateCarbonFootprint(event) {
 
     document.getElementById('deviceUsage').innerText = `Device Usage: ${totalDeviceCarbon.toFixed(2)} kg CO2e`;
 
+    // Calculate emissions from emails
     const [emailMin, emailMax] = parseRange(emailCount);
     const [attachmentMin, attachmentMax] = parseRange(emailAttachmentCount);
     const emailCarbon = ((emailMin + emailMax) / 2 * factors.emailFactors.email || 0 * 52) + 
@@ -148,17 +134,20 @@ async function calculateCarbonFootprint(event) {
 
     document.getElementById('emailUsage').innerText = `Email Usage: ${emailCarbon.toFixed(2)} kg CO2e`;
 
+    // Calculate emissions from Teams
     const teamsMessageCarbon = (parseRange(teamsMessages)[0] * (factors.teamsFactors.messages || 0) * 52);
     const teamsCallCarbon = (parseRange(teamsCallTime)[0] * (factors.teamsFactors.calls || 0) * 52);
 
     document.getElementById('teamsUsage').innerText = `Teams Usage: ${(teamsMessageCarbon + teamsCallCarbon).toFixed(2)} kg CO2e`;
 
+    // Calculate emissions from transportation
     const transportDistanceMiles = parseRange(transportDistance)[0];
     const totalTransportDistance = transportDistanceMiles * 52;
     const transportCarbon = totalTransportDistance * (factors.transportFactors[transportMode] || 0);
 
     document.getElementById('transportation').innerText = `Transportation: ${transportCarbon.toFixed(2)} kg CO2e`;
 
+    // Calculate emissions from printing
     let printingCarbon = 0;
     if (printing === '5-10') {
         printingCarbon = 7.5 * (factors.printingFactors.perPage || 0) * 52;
@@ -170,6 +159,7 @@ async function calculateCarbonFootprint(event) {
 
     document.getElementById('printing').innerText = `Printing: ${printingCarbon.toFixed(2)} kg CO2e`;
 
+    // Calculate emissions from working patterns
     const officeDaysPerYear = officeDays * 52;
     const wfhDaysPerYear = wfhDays * 52;
     const commuteDistancePerYear = commuteDistance * 365;
@@ -180,6 +170,7 @@ async function calculateCarbonFootprint(event) {
 
     document.getElementById('workingPatterns').innerText = `Working Patterns: ${(officeCarbon + wfhCarbon + commuteCarbon).toFixed(2)} kg CO2e`;
 
+    // Calculate total carbon emissions
     const totalCarbon = totalDeviceCarbon + emailCarbon + teamsMessageCarbon + teamsCallCarbon + transportCarbon + printingCarbon + officeCarbon + wfhCarbon + commuteCarbon;
 
     document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)} kg CO2e`;

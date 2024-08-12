@@ -105,28 +105,47 @@
                 </select>
             </div>
 
+            <!-- WFH Section -->
             <button type="button" class="collapsible">Working Patterns</button>
             <div class="content">
                 <label for="wfhDays">Work From Home Days per Week:</label>
-                <input type="number" id="wfhDays" name="wfhDays" min="0" max="7" aria-label="Enter Number of WFH Days per Week" required>
+                <select id="wfhDays" name="wfhDays" aria-label="Select Work From Home Days">
+                    <option value="0">0 days</option>
+                    <option value="1">1 day</option>
+                    <option value="2">2 days</option>
+                    <option value="3">3 days</option>
+                    <option value="4">4 days</option>
+                    <option value="5">5 days</option>
+                </select>
             
                 <label for="officeDays">Office Days per Week:</label>
-                <input type="number" id="officeDays" name="officeDays" min="0" max="7" aria-label="Enter Number of Office Days per Week" required>
+                <select id="officeDays" name="officeDays" aria-label="Select Office Days">
+                    <option value="0">0 days</option>
+                    <option value="1">1 day</option>
+                    <option value="2">2 days</option>
+                    <option value="3">3 days</option>
+                    <option value="4">4 days</option>
+                    <option value="5">5 days</option>
+                </select>
             
                 <label for="commuteType">Commute Type:</label>
-                <select id="commuteType" name="commuteType" aria-label="Select Commute Type" required>
-                    <option value="Bicycle/Foot">Bicycle/Foot</option>
-                    <option value="Train">Train</option>
+                <select id="commuteType" name="commuteType" aria-label="Select Commute Type">
+                    <option value="Walk">Walk</option>
+                    <option value="Bike">Bike</option>
                     <option value="Bus">Bus</option>
                     <option value="Car">Car</option>
+                    <option value="Train">Train</option>
                 </select>
-           
-                <label for="commuteDistance">Commute Distance (miles per day):</label>
-                <input type="number" id="commuteDistance" name="commuteDistance" min="1" aria-label="Enter Commute Distance in Miles" required>
+            
+                <label for="commuteDistance">Commute Distance (miles):</label>
+                <input type="number" id="commuteDistance" name="commuteDistance" min="0" step="0.1" aria-label="Enter Commute Distance in Miles" required>
             </div>
 
 
+            
 
+
+            <!-- end wfh section -->
 
 
 
