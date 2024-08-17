@@ -4,6 +4,7 @@
 
 
 // Collapsible section logic
+
 document.addEventListener("DOMContentLoaded", () => {
     const collapsibles = document.querySelectorAll(".collapsible");
 
@@ -19,15 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Tip button toggle logic
-    const tipButton = document.getElementById('tip');
-    const introSection = document.getElementById('intro');
+    // Toggle button logic for info paragraph
+    const toggleInfoButton = document.getElementById("toggleInfo");
+    const infoText = document.getElementById("infoText");
 
-    tipButton.addEventListener('click', () => {
-        if (introSection.hidden) {
-            introSection.hidden = false;
+    toggleInfoButton.addEventListener("click", () => {
+        if (infoText.style.display === "none") {
+            infoText.style.display = "block";
         } else {
-            introSection.hidden = true;
+            infoText.style.display = "none";
         }
     });
 });
@@ -74,39 +75,27 @@ function removeDevice(button) {
 
 // Convert selected range to min and max values
 function parseRange(range) {
-    // Handle 'none' case
     if (range === 'none') return [0, 0];
-
-    // Split the range by '-'
     const parts = range.split('-');
-
-    // If split results in exactly two parts, try to parse them as numbers
     if (parts.length === 2) {
         const min = parseFloat(parts[0].trim());
         const max = parseFloat(parts[1].trim());
-
-        // Check if both min and max are valid numbers
-        if (!isNaN(min) && !isNaN(max)) {
-            return [min, max];
-        }
+        if (!isNaN(min) && !isNaN(max)) return [min, max];
     }
-
-    // If split failed or values aren't valid numbers, return default [0, 0]
     console.warn(`Unexpected range format: ${range}`);
     return [0, 0];
 }
 
 async function calculateCarbonFootprint(event) {
-    event.preventDefault(); // Prevent page refresh
+    event.preventDefault();
 
     let factors;
     try {
         factors = await fetchFactors();
     } catch {
-        return; // Exit if fetching factors fails
+        return;
     }
 
-    // Get values from the inputs
     const emailCount = document.getElementById('emailCount').value;
     const emailAttachmentCount = document.getElementById('emailAttachmentCount').value;
     const teamsMessages = document.getElementById('teamsMessages').value;
@@ -212,10 +201,9 @@ async function calculateCarbonFootprint(event) {
         }]
     };
 
-    // Render the chart
     const ctx = document.getElementById('emissionsChart').getContext('2d');
     new Chart(ctx, {
-        type: 'bar', // or 'pie', 'line', etc.
+        type: 'bar',
         data: chartData,
         options: {
             scales: {

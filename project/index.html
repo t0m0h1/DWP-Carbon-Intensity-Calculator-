@@ -9,8 +9,9 @@
 
 <body>
     <div class="container">
+        <button id="toggleInfo" aria-label="Toggle information">?</button>
         <h1>DWP Digital Footprint Calculator</h1>
-        <p>This tool calculates your digital footprint by taking into account various factors such as device usage, email activity, Teams usage, transportation, and printing activity. </p> <p> Fill in the form below to get an estimate of your carbon footprint and learn ways to improve.</p>
+        <p id="infoText">This tool calculates your digital footprint by taking into account various factors such as device usage, email activity, Teams usage, transportation, and printing activity. Fill in the form below to get an estimate of your carbon footprint and learn ways to improve.</p>
         <form id="footprintForm" onsubmit="calculateCarbonFootprint(event)">
             <!-- Devices Section (Always Visible) -->
             <h2>Devices</h2>
@@ -33,26 +34,25 @@
             </div>
 
             <!-- Collapsible Sections -->
-            <!-- Emails Section -->
             <button type="button" class="collapsible">Emails</button>
             <div class="content">
                 <label for="emailCount">Number of Emails per Week:</label>
-                    <select id="emailCount" name="emailCount" aria-label="Select Number of Emails per Week" required>
-                        <option value="none">None</option>
-                        <option value="less than 20">less than 20</option>
-                        <option value="20-50">20-50</option>
-                        <option value="50-100">50-100</option>
-                        <option value="150">100+</option>
-                    </select>
+                <select id="emailCount" name="emailCount" aria-label="Select Number of Emails per Week" required>
+                    <option value="none">None</option>
+                    <option value="less than 20">less than 20</option>
+                    <option value="20-50">20-50</option>
+                    <option value="50-100">50-100</option>
+                    <option value="150">100+</option>
+                </select>
 
-                    <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
-                    <select id="emailAttachmentCount" name="emailAttachmentCount" aria-label="Select Number of Attachment Emails per Week" required>
-                        <option value="none">None</option>
-                        <option value="10-20">10-20</option>
-                        <option value="30-40">30-40</option>
-                        <option value="50-60">50-60</option>
-                        <option value="70-80">70-80</option>
-                    </select>
+                <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
+                <select id="emailAttachmentCount" name="emailAttachmentCount" aria-label="Select Number of Attachment Emails per Week" required>
+                    <option value="none">None</option>
+                    <option value="10-20">10-20</option>
+                    <option value="30-40">30-40</option>
+                    <option value="50-60">50-60</option>
+                    <option value="70-80">70-80</option>
+                </select>
             </div>
 
             <!-- Teams Usage Section -->
@@ -84,8 +84,6 @@
                     <option value="Train">Train</option>
                     <option value="Bus">Bus</option>
                     <option value="Car">Car</option>
-
-
                 </select>
                 <label for="transportDistance">Distance (miles) per Week:</label>
                 <select id="transportDistance" name="transportDistance" aria-label="Select Distance in Miles per Year" required>
@@ -94,8 +92,6 @@
                     <option value="501-1000">51-100+</option>
                 </select>
             </div>
-
-
 
             <button type="button" class="collapsible">Printing Activity</button>
             <div class="content">
@@ -108,7 +104,6 @@
                 </select>
             </div>
 
-
             <button type="button" class="collapsible">Working Patterns</button>
             <div class="content">
                 <label for="wfhDays">Work From Home Days per Week:</label>
@@ -120,7 +115,7 @@
                     <option value="4">4 days</option>
                     <option value="5">5 days</option>
                 </select>
-            
+
                 <label for="officeDays">Office Days per Week:</label>
                 <select id="officeDays" name="officeDays" aria-label="Select Office Days">
                     <option value="0">0 days</option>
@@ -130,7 +125,7 @@
                     <option value="4">4 days</option>
                     <option value="5">5 days</option>
                 </select>
-            
+
                 <label for="commuteType">Commute Type:</label>
                 <select id="commuteType" name="commuteType" aria-label="Select Commute Type">
                     <option value="Walk">Walk</option>
@@ -139,13 +134,10 @@
                     <option value="Car">Car</option>
                     <option value="Train">Train</option>
                 </select>
-            
+
                 <label for="commuteDistance">Commute Distance (miles):</label>
                 <input type="number" id="commuteDistance" name="commuteDistance" min="0" step="0.1" aria-label="Enter Commute Distance in Miles" required>
             </div>
-
-
-        
 
             <button type="submit">Calculate</button>
         </form>
@@ -163,17 +155,13 @@
                 <p id="printing">Printing: 0.00 kg CO2e</p>
                 <p id="workingPatterns">Working Patterns: 0.00 kg CO2e</p>
             </div>
-        
 
-            <!-- Chart --> 
+            <!-- Chart -->
             <canvas id="emissionsChart" width="400" height="400"></canvas>
         </div>
-
-
     </div>
     <script src="script.js"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </body>
 </html>
