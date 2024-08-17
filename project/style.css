@@ -43,6 +43,36 @@ a:hover {
     background-color: #003c71; /* GOV.UK dark blue */
 }
 
+/* Toggle Button */
+#toggleInfo {
+    background-color: #1d70b8; /* GOV.UK blue */
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    border: none;
+    font-size: 16px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin: 0 0 10px 0;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+#toggleInfo:hover {
+    background-color: #003c71; /* GOV.UK dark blue */
+}
+
+#toggleInfo.active {
+    background-color: #003c71; /* GOV.UK dark blue */
+}
+
 /* Intro Section */
 #intro {
     margin-bottom: 30px;
@@ -60,6 +90,14 @@ a:hover {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    position: relative; /* Needed for toggle button positioning */
+}
+
+/* Toggle Content */
+.container .toggle-content {
+    display: none; /* Hidden by default */
+    margin-top: 15px;
+    color: #333;
 }
 
 /* Headings */
