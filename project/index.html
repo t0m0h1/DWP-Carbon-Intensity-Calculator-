@@ -6,16 +6,20 @@
     <title>DWP Digital Footprint Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="container">
+        <!-- Information Toggle Button -->
         <button id="toggleInfo" aria-label="Toggle information">?</button>
         <h1>DWP Digital Footprint Calculator</h1>
-        <p id="infoText">This tool calculates your digital footprint by taking into account various factors such as device usage, email activity, Teams usage, transportation, and printing activity. Fill in the form below to get an estimate of your carbon footprint and learn ways to improve.</p>
+        <p id="infoText" hidden>This tool calculates your digital footprint by taking into account various factors such as device usage, email activity, teams usage, transportation, and printing activity. 
+            <br> <br> Fill in the form below to get an estimate of your carbon footprint and learn ways to improve.</p>
+        
+        <!-- Form for Carbon Footprint Calculation -->
         <form id="footprintForm" onsubmit="calculateCarbonFootprint(event)">
-            <!-- Devices Section (Always Visible) -->
+            
+            <!-- Devices Section -->
             <h2>Devices</h2>
-            <p>Add </p>
+            <p>Provide details about the devices you use regularly. Longer usage of devices generally leads to a lower annual footprint.</p>
             <div id="devicesContainer">
                 <div class="device">
                     <label for="deviceType0">Device Type:</label>
@@ -27,15 +31,16 @@
                     <label for="deviceUsage0">Length of Use (years):</label>
                     <input type="number" id="deviceUsage0" name="deviceUsage[]" min="1" step="1" aria-label="Enter Length of Use in Years" required>
                 </div>
-                <p>The longer you use a device, the lower your annual footprint will be. </p>
+                <p>Using energy-efficient devices and recycling old ones can help reduce your carbon footprint.</p>
             </div>
             <div class="button-container">
                 <button type="button" onclick="addDevice()">Add Device</button>
             </div>
-
-            <!-- Collapsible Sections -->
+            
+            <!-- Emails Section -->
             <button type="button" class="collapsible">Emails</button>
             <div class="content">
+                <p>Emails, especially those with attachments, can contribute significantly to your digital footprint. Reduce unnecessary emails and attachments to lower your impact.</p>
                 <label for="emailCount">Number of Emails per Week:</label>
                 <select id="emailCount" name="emailCount" aria-label="Select Number of Emails per Week" required>
                     <option value="none">None</option>
@@ -44,7 +49,7 @@
                     <option value="50-100">50-100</option>
                     <option value="150">100+</option>
                 </select>
-
+                
                 <label for="emailAttachmentCount">Number of Attachment Emails per Week:</label>
                 <select id="emailAttachmentCount" name="emailAttachmentCount" aria-label="Select Number of Attachment Emails per Week" required>
                     <option value="none">None</option>
@@ -54,10 +59,11 @@
                     <option value="70-80">70-80</option>
                 </select>
             </div>
-
+            
             <!-- Teams Usage Section -->
             <button type="button" class="collapsible">Teams Usage</button>
             <div class="content">
+                <p>Teams messages and calls contribute to your digital footprint. Limit video calls and messages to reduce data center energy consumption.</p>
                 <label for="teamsMessages">Number of Teams Messages per Week:</label>
                 <select id="teamsMessages" name="teamsMessages" aria-label="Select Number of Teams Messages per Week" required>
                     <option value="0-50">0-50</option>
@@ -65,6 +71,7 @@
                     <option value="101-150">101-150</option>
                     <option value="151-200">151-200</option>
                 </select>
+                
                 <label for="teamsCallTime">Teams Call Time (hours per Week):</label>
                 <select id="teamsCallTime" name="teamsCallTime" aria-label="Select Teams Call Time per Week" required>
                     <option value="0-1">0-1</option>
@@ -74,27 +81,31 @@
                     <option value="15+">15+</option>
                 </select>
             </div>
-
+            
             <!-- Transportation Section -->
             <button type="button" class="collapsible">Transportation</button>
             <div class="content">
-                <label for="transportMode">Transport Mode: (commuting) </label>
+                <p>Your transportation choices impact your carbon footprint. Opt for public transport or carpooling to reduce emissions.</p>
+                <label for="transportMode">Transport Mode (commuting):</label>
                 <select id="transportMode" name="transportMode" aria-label="Select Transport Mode" required>
                     <option value="Bicycle/Foot">Bicycle/Foot</option>
                     <option value="Train">Train</option>
                     <option value="Bus">Bus</option>
                     <option value="Car">Car</option>
                 </select>
+                
                 <label for="transportDistance">Distance (miles) per Week:</label>
-                <select id="transportDistance" name="transportDistance" aria-label="Select Distance in Miles per Year" required>
+                <select id="transportDistance" name="transportDistance" aria-label="Select Distance in Miles per Week" required>
                     <option value="0-100">0-25</option>
                     <option value="101-500">26-50</option>
                     <option value="501-1000">51-100+</option>
                 </select>
             </div>
-
+            
+            <!-- Printing Activity Section -->
             <button type="button" class="collapsible">Printing Activity</button>
             <div class="content">
+                <p>Printing adds to your carbon footprint due to paper and energy use. Reduce printing and opt for digital documents when possible.</p>
                 <label for="printing">Printing per Week:</label>
                 <select id="printing" name="printing" aria-label="Select Printing Range" required>
                     <option value="0">I don't print anything</option>
@@ -103,9 +114,11 @@
                     <option value="20/day">I print around 20 pages per day</option>
                 </select>
             </div>
-
+            
+            <!-- Working Patterns Section -->
             <button type="button" class="collapsible">Working Patterns</button>
             <div class="content">
+                <p>Work patterns affect your overall carbon footprint. Balancing home and office work can help reduce emissions associated with commuting and home energy use.</p>
                 <label for="wfhDays">Work From Home Days per Week:</label>
                 <select id="wfhDays" name="wfhDays" aria-label="Select Work From Home Days">
                     <option value="0">0 days</option>
@@ -115,7 +128,7 @@
                     <option value="4">4 days</option>
                     <option value="5">5 days</option>
                 </select>
-
+                
                 <label for="officeDays">Office Days per Week:</label>
                 <select id="officeDays" name="officeDays" aria-label="Select Office Days">
                     <option value="0">0 days</option>
@@ -125,7 +138,7 @@
                     <option value="4">4 days</option>
                     <option value="5">5 days</option>
                 </select>
-
+                
                 <label for="commuteType">Commute Type:</label>
                 <select id="commuteType" name="commuteType" aria-label="Select Commute Type">
                     <option value="Walk">Walk</option>
@@ -134,17 +147,21 @@
                     <option value="Car">Car</option>
                     <option value="Train">Train</option>
                 </select>
-
+                
                 <label for="commuteDistance">Commute Distance (miles):</label>
                 <input type="number" id="commuteDistance" name="commuteDistance" min="0" step="0.1" aria-label="Enter Commute Distance in Miles" required>
             </div>
-
+            
+            <!-- Submit Button -->
             <button type="submit">Calculate</button>
         </form>
+        
+        <!-- Results Section -->
         <div id="results">
             <h3>Total Carbon Emissions: <span id="totalCarbon">0.00</span> kg CO2e</h3>
         </div>
 
+        <!-- Breakdown of Emissions -->
         <div class="breakdown">
             <h2>Breakdown of Emissions</h2>
             <div id="emissionsBreakdown">
@@ -155,11 +172,12 @@
                 <p id="printing">Printing: 0.00 kg CO2e</p>
                 <p id="workingPatterns">Working Patterns: 0.00 kg CO2e</p>
             </div>
-
             <!-- Chart -->
             <canvas id="emissionsChart" width="400" height="400"></canvas>
         </div>
     </div>
+
+    <!-- JavaScript -->
     <script src="script.js"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
