@@ -12,6 +12,20 @@ body {
     color: #333; /* GOV.UK text color */
 }
 
+
+#title {
+    font-weight: 400; /* GOV.UK font weight */
+    font-size: 28px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 201, 7, 0.2); /* GOV.UK yellow with 20% opacity */
+    background-blend-mode: multiply; /* Blend the background color */
+    background-color: #f4f4f4; /* Add a grey background color */
+    border-radius: 10px; /* Make the background rectangle rounded */
+    margin-top: 30px;
+    padding: 20px 10px; /* Add more padding but less at the sides */
+}
+
+
 /* Links */
 a {
     color: #005ea5; /* GOV.UK link color */
