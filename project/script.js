@@ -2,9 +2,7 @@
 // transport factors are in kg CO2e per km converted to miles
 
 
-
 // Collapsible section logic
-
 document.addEventListener("DOMContentLoaded", () => {
     const collapsibles = document.querySelectorAll(".collapsible");
 
@@ -20,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Toggle button logic for info paragraph
     const toggleInfoButton = document.getElementById("toggleInfo");
     const infoText = document.getElementById("infoText");
 
@@ -33,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Fetch carbon factors
 async function fetchFactors() {
     try {
         const response = await fetch('factors.json');
@@ -46,7 +42,6 @@ async function fetchFactors() {
     }
 }
 
-// Manipulate the DOM to add or remove devices
 let deviceCount = 1;
 
 function addDevice() {
@@ -73,7 +68,6 @@ function removeDevice(button) {
     container.removeChild(button.parentElement);
 }
 
-// Convert selected range to min and max values
 function parseRange(range) {
     if (range === 'none') return [0, 0];
     const parts = range.split('-');
@@ -170,45 +164,91 @@ async function calculateCarbonFootprint(event) {
 
     document.getElementById('workingPatterns').innerText = `Working Patterns: ${(officeCarbon + wfhCarbon + commuteCarbon).toFixed(2)} kg CO2e`;
 
-    // Calculate total carbon emissions
-    const totalCarbon = totalDeviceCarbon + emailCarbon + teamsMessageCarbon + teamsCallCarbon + transportCarbon + printingCarbon + officeCarbon + wfhCarbon + commuteCarbon;
+    // Calculate emissions from data storage
+    const emailClearFrequency = document.getElementById('emailClearFrequency').value;
+    const onedriveClearFrequency = document.getElementById('onedriveClearFrequency').value;
 
+    const emailClearCarbon = {
+        'never': 0,
+        'monthly': 0.1,
+        'quarterly': 0.2,
+        'yearly': 0.5,
+        'more_than_yearly': 1
+    }[emailClearFrequency] || 0;
+
+    const onedriveClearCarbon = {
+        'never': 0,
+        'monthly': 0.1,
+        'quarterly': 0.2,
+        'yearly': 0.5,
+        'more_than_yearly': 1
+    }[onedriveClearFrequency] || 0;
+
+    const dataStorageCarbon = (emailClearCarbon + onedriveClearCarbon) * 52;
+
+    // Update total emissions
+    const totalCarbon = totalDeviceCarbon + emailCarbon + teamsMessageCarbon + teamsCallCarbon + transportCarbon + printingCarbon + officeCarbon + wfhCarbon + commuteCarbon + dataStorageCarbon;
     document.getElementById('totalCarbon').innerText = `${totalCarbon.toFixed(2)} kg CO2e`;
 
-    // Prepare data for the chart
-    const chartData = {
-        labels: ['Device Usage', 'Email Usage', 'Teams Usage', 'Transportation', 'Printing', 'Working Patterns'],
-        datasets: [{
-            label: 'Carbon Emissions (kg CO2e)',
-            data: [totalDeviceCarbon, emailCarbon, (teamsMessageCarbon + teamsCallCarbon), transportCarbon, printingCarbon, (officeCarbon + wfhCarbon + commuteCarbon)],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    };
-
+    // Update chart
     const ctx = document.getElementById('emissionsChart').getContext('2d');
     new Chart(ctx, {
-        type: 'bar',
-        data: chartData,
+        type: 'pie',
+        data: {
+            labels: [
+                'Device Usage',
+                'Email Usage',
+                'Teams Usage',
+                'Transportation',
+                'Printing',
+                'Working Patterns',
+                'Data Storage'
+            ],
+            datasets: [{
+                data: [
+                    totalDeviceCarbon,
+                    emailCarbon,
+                    teamsMessageCarbon + teamsCallCarbon,
+                    transportCarbon,
+                    printingCarbon,
+                    officeCarbon + wfhCarbon + commuteCarbon,
+                    dataStorageCarbon
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            const label = tooltipItem.label || '';
+                            const value = tooltipItem.raw || 0;
+                            return `${label}: ${value.toFixed(2)} kg CO2e`;
+                        }
+                    }
                 }
             }
         }

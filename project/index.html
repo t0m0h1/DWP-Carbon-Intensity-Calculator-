@@ -114,6 +114,33 @@
                     <option value="20/day">I print around 20 pages per day</option>
                 </select>
             </div>
+
+
+            <!-- Data Storage Section -->
+            <button type="button" class="collapsible">Data Storage</button>
+            <div class="content">
+                <p>Managing and clearing your data storage can help reduce the energy required to maintain data on servers. Regularly clearing out unnecessary files can lower your digital footprint.</p>
+                
+                <label for="emailClearFrequency">Frequency of Clearing Emails:</label>
+                <select id="emailClearFrequency" name="emailClearFrequency" aria-label="Select Frequency of Clearing Emails" required>
+                    <option value="never">Never</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="more_than_yearly">Less frequently than yearly</option>
+                </select>
+                
+                <label for="onedriveClearFrequency">Frequency of Clearing OneDrive Files:</label>
+                <select id="onedriveClearFrequency" name="onedriveClearFrequency" aria-label="Select Frequency of Clearing OneDrive Files" required>
+                    <option value="never">Never</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="more_than_yearly">Less frequently than yearly</option>
+                </select>
+            </div>
+
+
             
             <!-- Working Patterns Section -->
             <button type="button" class="collapsible">Working Patterns</button>
@@ -158,7 +185,7 @@
         
         <!-- Results Section -->
         <div id="results">
-            <h3>Total Carbon Emissions: <span id="totalCarbon">0.00</span> kg CO2e</h3>
+            <h3>Annual Carbon Emissions: <span id="totalCarbon">0.00</span></h3>
         </div>
 
         <!-- Breakdown of Emissions -->
