@@ -12,19 +12,15 @@ body {
     color: #333; /* GOV.UK text color */
 }
 
-
 #title {
     font-weight: 400; /* GOV.UK font weight */
     font-size: 28px;
     margin-bottom: 20px;
-    background-color: rgba(255, 201, 7, 0.2); /* GOV.UK yellow with 20% opacity */
-    background-blend-mode: multiply; /* Blend the background color */
     background-color: #f4f4f4; /* Add a grey background color */
     border-radius: 10px; /* Make the background rectangle rounded */
     margin-top: 30px;
     padding: 20px 10px; /* Add more padding but less at the sides */
 }
-
 
 /* Links */
 a {
@@ -41,19 +37,19 @@ a:hover {
     background-color: #1d70b8; /* GOV.UK blue */
     color: white;
     cursor: pointer;
-    padding: 5px;
+    padding: 10px; /* Adjusted for consistency */
     text-align: center;
     border: none;
-    font-size: 12px;
+    font-size: 16px; /* Align with other buttons */
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin-bottom: 10px;
     margin-left: 70px;
     float: left;
 }
 
-#tip.active, #tip:hover {
+#tip:hover {
     background-color: #003c71; /* GOV.UK dark blue */
 }
 
@@ -79,11 +75,7 @@ a:hover {
     font-weight: bold;
 }
 
-#toggleInfo:hover {
-    background-color: #003c71; /* GOV.UK dark blue */
-}
-
-#toggleInfo.active {
+#toggleInfo:hover, #toggleInfo.active {
     background-color: #003c71; /* GOV.UK dark blue */
 }
 
@@ -344,4 +336,10 @@ button.remove:active {
     #emissionsBreakdown {
         grid-template-columns: 1fr; /* Single column on small screens */
     }
+}
+
+/* Accessibility: Focus States */
+button:focus, select:focus, input:focus {
+    outline: 2px solid #005ea5; /* Visible focus state */
+    outline-offset: 2px;
 }
