@@ -4,12 +4,20 @@
 
 ### Bug 1
 
-- **Description**: 
+- **Description**:
+
+When user presses calculate they must refresh the page if they want to make a new calculation 
+
 - **Location**: 
+N/A
 - **Steps to reproduce**: 
+Fill out form and press calculate. Try change values in the form and press calculate again.
 - **Expected result**: 
+Carbon emissions change
 - **Actual result**: 
+Doesn't change value
 - **Status**: 
+not fixed
 
 ### Bug 2
 
@@ -20,19 +28,6 @@
 - **Actual result**: 
 - **Status**: 
 
-## Enhancements
-
-### Enhancement 1
-
-- **Description**: 
-- **Benefit**: 
-- **Status**: 
-
-### Enhancement 2
-
-- **Description**: 
-- **Benefit**: 
-- **Status**: 
 
 ## General Notes
 
