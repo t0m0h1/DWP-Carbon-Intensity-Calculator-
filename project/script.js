@@ -54,6 +54,7 @@ function addDevice() {
             <option value="Laptop">Laptop</option>
             <option value="Desktop">Desktop</option>
             <option value="Smartphone">Smartphone</option>
+            <option value="Second Monitor">Second Monitor</option> <!-- New option for Monitor -->
         </select>
         <label for="deviceUsage${deviceCount}">Length of Use (years):</label>
         <input type="number" id="deviceUsage${deviceCount}" name="deviceUsage[]" min="1" step="1" aria-label="Enter Length of Use in Years" required>
@@ -62,6 +63,7 @@ function addDevice() {
     container.appendChild(newDevice);
     deviceCount++;
 }
+
 
 function removeDevice(button) {
     const container = document.getElementById('devicesContainer');
@@ -79,6 +81,11 @@ function parseRange(range) {
     console.warn(`Unexpected range format: ${range}`);
     return [0, 0];
 }
+
+
+
+
+
 
 async function calculateCarbonFootprint(event) {
     event.preventDefault();
@@ -170,18 +177,18 @@ async function calculateCarbonFootprint(event) {
 
     const emailClearCarbon = {
         'never': 0,
-        'monthly': 0.1,
-        'quarterly': 0.2,
-        'yearly': 0.5,
-        'more_than_yearly': 1
+        'monthly': factors.dataStorageFactors.emailClearedMonthly || 0,
+        'quarterly': factors.dataStorageFactors.emailClearedMonthly * 3 || 0,
+        'yearly': factors.dataStorageFactors.emailClearedMonthly * 12 || 0,
+        'more_than_yearly': factors.dataStorageFactors.emailClearedMonthly * 15 || 0
     }[emailClearFrequency] || 0;
 
     const onedriveClearCarbon = {
         'never': 0,
-        'monthly': 0.1,
-        'quarterly': 0.2,
-        'yearly': 0.5,
-        'more_than_yearly': 1
+        'monthly': factors.dataStorageFactors.oneDriveClearedMonthly || 0,
+        'quarterly': factors.dataStorageFactors.oneDriveClearedMonthly * 3 || 0,
+        'yearly': factors.dataStorageFactors.oneDriveClearedMonthly * 12 || 0,
+        'more_than_yearly': factors.dataStorageFactors.oneDriveClearedMonthly * 15 || 0
     }[onedriveClearFrequency] || 0;
 
     const dataStorageCarbon = (emailClearCarbon + onedriveClearCarbon) * 52;
@@ -239,14 +246,12 @@ async function calculateCarbonFootprint(event) {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: 'top'
                 },
                 tooltip: {
                     callbacks: {
-                        label: function (tooltipItem) {
-                            const label = tooltipItem.label || '';
-                            const value = tooltipItem.raw || 0;
-                            return `${label}: ${value.toFixed(2)} kg CO2e`;
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2) + ' kg CO2e';
                         }
                     }
                 }
