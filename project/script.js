@@ -1,6 +1,5 @@
-// device data points are in kg CO2e
-// transport factors are in kg CO2e per km converted to miles
-
+// Device data points are in kg CO2e
+// Transport factors are in kg CO2e per km converted to miles
 
 // Collapsible section logic
 document.addEventListener("DOMContentLoaded", () => {
@@ -64,7 +63,6 @@ function addDevice() {
     deviceCount++;
 }
 
-
 function removeDevice(button) {
     const container = document.getElementById('devicesContainer');
     container.removeChild(button.parentElement);
@@ -85,8 +83,6 @@ function parseRange(range) {
 
 
 
-
-
 async function calculateCarbonFootprint(event) {
     event.preventDefault();
 
@@ -97,6 +93,7 @@ async function calculateCarbonFootprint(event) {
         return;
     }
 
+    // Extract and process data as before
     const emailCount = document.getElementById('emailCount').value;
     const emailAttachmentCount = document.getElementById('emailAttachmentCount').value;
     const teamsMessages = document.getElementById('teamsMessages').value;
@@ -258,4 +255,24 @@ async function calculateCarbonFootprint(event) {
             }
         }
     });
+
+    // Categorize user based on total carbon footprint
+    const thresholds = {
+        low: 100, // kg CO2e
+        medium: 250, // kg CO2e
+        high: 500 // kg CO2e
+    };
+
+    let persona = '';
+    if (totalCarbon <= thresholds.low) {
+        persona = 'Eco-Friendly';
+    } else if (totalCarbon <= thresholds.medium) {
+        persona = 'Average';
+    } else if (totalCarbon <= thresholds.high) {
+        persona = 'High Carbon Footprint';
+    } else {
+        persona = 'Very High Carbon Footprint';
+    }
+
+    document.getElementById('personaResult').innerText = persona;
 }
