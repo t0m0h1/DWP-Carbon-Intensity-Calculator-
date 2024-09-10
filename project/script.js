@@ -84,6 +84,7 @@ function removeDevice(button) {
 // }
 
 
+// new parseRange function 
 function parseRange(range) {
     if (range === 'none') return [0, 0];
     
