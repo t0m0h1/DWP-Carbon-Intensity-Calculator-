@@ -68,14 +68,36 @@ function removeDevice(button) {
     container.removeChild(button.parentElement);
 }
 
+
+// existing parseRange function
+
+// function parseRange(range) {
+//     if (range === 'none') return [0, 0];
+//     const parts = range.split('-');
+//     if (parts.length === 2) {
+//         const min = parseFloat(parts[0].trim());
+//         const max = parseFloat(parts[1].trim());
+//         if (!isNaN(min) && !isNaN(max)) return [min, max];
+//     }
+//     console.warn(`Unexpected range format: ${range}`);
+//     return [0, 0];
+// }
+
+
 function parseRange(range) {
     if (range === 'none') return [0, 0];
+    
     const parts = range.split('-');
     if (parts.length === 2) {
         const min = parseFloat(parts[0].trim());
-        const max = parseFloat(parts[1].trim());
-        if (!isNaN(min) && !isNaN(max)) return [min, max];
+        const maxPart = parts[1].trim();
+        const max = maxPart === '+' ? Infinity : parseFloat(maxPart);
+        
+        if (!isNaN(min) && (max === Infinity || !isNaN(max))) {
+            return [min, max];
+        }
     }
+    
     console.warn(`Unexpected range format: ${range}`);
     return [0, 0];
 }

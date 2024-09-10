@@ -89,18 +89,23 @@
                 <p>Your transportation choices impact your carbon footprint. Opt for public transport or carpooling to reduce emissions.</p>
                 <label for="transportMode">Transport Mode (commuting):</label>
                 <select id="transportMode" name="transportMode" aria-label="Select Transport Mode" required>
-                    <option value="Bicycle/Foot">Bicycle/Foot</option>
+                    <option value="Car">Car</option>
                     <option value="Train">Train</option>
                     <option value="Bus">Bus</option>
-                    <option value="Car">Car</option>
+                    <option value="Bicycle/Foot">Bicycle/Foot</option>
                 </select>
-                
+
                 <label for="transportDistance">Distance (miles) per Week:</label>
                 <select id="transportDistance" name="transportDistance" aria-label="Select Distance in Miles per Week" required>
-                    <option value="0-100">0-25</option>
-                    <option value="101-500">26-50</option>
-                    <option value="501-1000">51-100+</option>
+                    <option value="0-25">0-25</option>
+                    <option value="26-50">26-50</option>
+                    <option value="51-100">51-100</option>
+                    <option value="101-250">101-250</option>
+                    <option value="250+">250+</option>
                 </select>
+
+                
+         
             </div>
             
             <!-- Printing Activity Section -->
@@ -209,7 +214,7 @@
 
         
         
-        <!-- Persona Section -->
+    <!-- Persona Section -->
 
         <!-- for example-->
         <div id="personaSection">
