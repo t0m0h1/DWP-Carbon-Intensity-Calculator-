@@ -70,6 +70,8 @@ function removeDevice(button) {
 
 
 // existing parseRange function
+// Assumed both min and max values were always numbers.
+
 
 // function parseRange(range) {
 //     if (range === 'none') return [0, 0];
