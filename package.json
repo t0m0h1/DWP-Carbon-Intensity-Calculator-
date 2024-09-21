@@ -1,0 +1,12 @@
+{
+  "name": "dwp-carbon-intensity-calculator--3",
+  "version": "1.0.0",
+  "description": "This tool helps colleagues to measure, monitor, and reduce their carbon footprint.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

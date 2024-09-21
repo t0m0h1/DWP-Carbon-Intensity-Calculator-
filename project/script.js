@@ -1,6 +1,8 @@
 // Device data points are in kg CO2e
 // Transport factors are in kg CO2e per km converted to miles
 
+
+
 // Collapsible section logic
 document.addEventListener("DOMContentLoaded", () => {
     const collapsibles = document.querySelectorAll(".collapsible");
