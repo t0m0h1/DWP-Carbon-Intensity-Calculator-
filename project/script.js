@@ -303,3 +303,11 @@ async function calculateCarbonFootprint(event) {
 
     document.getElementById('personaResult').innerText = persona;
 }
+
+
+
+// Exporting functions for testing
+module.exports = { 
+    parseRange,
+    calculateCarbonFootprint
+};
