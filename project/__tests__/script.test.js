@@ -3,7 +3,7 @@
 
 // test parseRange function
 
-const { parseRange } = require('../project/script'); // Adjust the path based on your file structure
+const { parseRange } = require('../script'); // Adjust the path based on your file structure
 
 describe('parseRange', () => {
     test('returns [0, 0] for "none"', () => {
@@ -27,7 +27,7 @@ describe('parseRange', () => {
 
 // test printing emissions function
 
-const { calculatePrintingEmissions } = require('../project/script'); // Adjust the path
+const { calculatePrintingEmissions } = require('../script'); // Adjust the path
 
 describe('calculatePrintingEmissions', () => {
     const perPageFactor = 0.1; // Example factor for testing
