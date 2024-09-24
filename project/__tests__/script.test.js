@@ -27,7 +27,7 @@ describe('parseRange', () => {
 
 // test printing emissions function
 
-const { calculatePrintingEmissions } = require('../script'); // Adjust the path
+const { calculatePrintingEmissions } = require('../project/script'); // Adjust the path
 
 describe('calculatePrintingEmissions', () => {
     const perPageFactor = 0.1; // Example factor for testing
