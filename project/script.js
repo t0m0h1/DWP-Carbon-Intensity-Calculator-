@@ -309,5 +309,8 @@ async function calculateCarbonFootprint(event) {
 // Exporting functions for testing
 module.exports = { 
     parseRange,
-    calculateCarbonFootprint
+    calculateCarbonFootprint,
+    addDevice,
+    removeDevice,
+    fetchFactors
 };
